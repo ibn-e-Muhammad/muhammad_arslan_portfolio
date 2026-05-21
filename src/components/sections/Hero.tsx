@@ -35,15 +35,28 @@ export default function Hero() {
         },
       );
 
-      gsap.to([".hero-title", ".hero-image"], {
-        y: 150,
-        opacity: 0,
+      // Parallax movement on scroll (Y translation only)
+      gsap.to([`.hero-title`, `.hero-image`], {
+        y: 100,
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "bottom top",
-          scrub: true,
+          end: "center top",
+          scrub: 1,
+        },
+      });
+
+      // Separate opacity fade only when hero reaches top
+      gsap.to([`.hero-title`, `.hero-image`], {
+        opacity: 0.2,
+        duration: 0.75,
+        ease: "power2.inOut",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 30%",
+          end: "top 10%",
+          scrub: 0,
         },
       });
     }, containerRef);
@@ -60,18 +73,18 @@ export default function Hero() {
       <div className="pointer-events-none fixed -top-24 -left-24 h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-terra/30 to-transparent blur-3xl opacity-20" />
       <Container className="relative flex min-h-screen items-center">
         <div className="grid w-full grid-cols-1 items-end gap-12 lg:grid-cols-[1.25fr_0.75fr]">
-          <div className="space-y-10">
+          <div className="space-y-12">
             <p className="text-sm uppercase tracking-[0.2em] text-ink/60">
               Cinematic. Editorial. Precise.
             </p>
             <h1
-              className="hero-title relative z-10 leading-[0.9]"
+              className="hero-title relative z-10 leading-[0.95]"
               style={{ fontSize: "var(--text-hero)" }}
             >
               <span className="block">Creative</span>
               <span className="block">Developer</span>
             </h1>
-            <p className="hero-body max-w-xl text-ink/70">
+            <p className="hero-body relative z-10 max-w-xl text-ink/70">
               Crafting immersive digital experiences with a focus on atmosphere,
               restraint, and detail.
             </p>
