@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --text-hero: clamp(4rem, 10vw, 9rem);
+    --text-h2: clamp(2.5rem, 5vw, 5rem);
+    --text-body: clamp(0.875rem, 1.2vw, 1.125rem);
+  }
+
+  body {
+    @apply font-sans;
+    font-size: var(--text-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif tracking-tighter;
+  }
+
+  h1 {
+    font-size: var(--text-hero);
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+  }
+}
