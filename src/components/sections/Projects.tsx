@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import Section from "../layout/Section";
 import Container from "../layout/Container";
+import projectsBg from "../../assets/images/background_projects.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,25 +60,23 @@ export default function Projects() {
       });
 
       /* ── Staggered reveal for project info rows ───── */
-      gsap.utils
-        .toArray<HTMLElement>(".project-info")
-        .forEach((info) => {
-          gsap.fromTo(
-            info,
-            { y: 30, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 1.2,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: info,
-                start: "top 90%",
-                toggleActions: "play none none reverse",
-              },
+      gsap.utils.toArray<HTMLElement>(".project-info").forEach((info) => {
+        gsap.fromTo(
+          info,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: info,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
             },
-          );
-        });
+          },
+        );
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -105,10 +105,11 @@ export default function Projects() {
               >
                 {/* Cinematic image with heavy-scrub parallax */}
                 <div className="project-media mb-12 w-full aspect-[4/3] md:aspect-[21/9] bg-oatmeal relative overflow-hidden rounded-sm">
-                  <img
-                    src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000"
+                  <Image
+                    src={projectsBg}
                     alt={project.title}
                     className="h-[130%] w-full object-cover"
+                    placeholder="blur"
                   />
                 </div>
 

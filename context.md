@@ -141,3 +141,18 @@
   Instruction: Phase 3.5 Step 4 — Terra color accents in typography.
   Action: Applied text-terra to Hero 'Creative' span, About h2, and Projects 'Selected Works' h2 for editorial color language across the site.
   Files: src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.5 Step 5 — GSAP conflict resolution (disappearing text fix).
+  Action: Hero — separated load reveals (target inner elements .hero-tag/.hero-title/.hero-body/.hero-image) from scroll-out parallax (targets wrapper divs .hero-content-wrapper/.hero-image-wrapper) so they never fight over the same DOM node. About — removed conflicting scrub-based fade-out ScrollTrigger that was competing with the toggleActions reveal on the same .about-reveal elements; now only a single non-scrub ScrollTrigger per element set. Also cleaned up duplicate placeholder paragraphs. Projects — changed info reveal trigger from top 90% to top 85% for better positioning. All ScrollTriggers confirmed inside gsap.context() with proper ctx.revert() cleanup.
+  Files: src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.6 Step 1 — Liquid gooey hero background.
+  Action: Added hidden SVG gooey filter (#goo) with feGaussianBlur + feColorMatrix for liquid slime merging effect. Orbs are now solid colors (bg-terra, bg-[#8A3A33], bg-[#D4A373]) without blur classes so the SVG filter creates the gooey intersection. Container uses opacity-40 + mix-blend-multiply + filter:url(#goo). GSAP orb animation widened to ±300 range with randomized scale (0.8–1.4) and stagger for frequent collisions. ScrollTrigger text parallax logic untouched.
+  File: src/components/sections/Hero.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.6 Step 2 — Replace placeholders with real images.
+  Action: Hero portrait placeholder replaced with hero_profile_pic.png using Next.js Image with blur placeholder and priority loading. About sticky portrait placeholder replaced with same hero_profile_pic.png. Projects section Unsplash placeholder replaced with local background_projects.png (terra-themed abstract). All use Next.js Image component for optimization.
+  Files: src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx
