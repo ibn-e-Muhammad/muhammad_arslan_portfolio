@@ -101,3 +101,18 @@
   Instruction: Phase 2.5 visual corrections for Contact, Projects, and Hero sections.
   Action: Enforced Contact inversion + massive serif heading, rebuilt Projects blocks to editorial spec, and updated Hero ambient layer/z-index + removed shadows.
   Files: src/components/sections/Contact.tsx, src/components/sections/Projects.tsx, src/components/sections/Hero.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3 Step 1 GSAP animations for Hero reveal, ambient glow, and scroll parallax.
+  Action: Added GSAP/ScrollTrigger animations with scoped context and refs in Hero.
+  File: src/components/sections/Hero.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3 Step 2 GSAP reveal for About right-column text.
+  Action: Added ScrollTrigger reveal in About and enabled Section ref forwarding for gsap.context.
+  Files: src/components/sections/About.tsx, src/components/layout/Section.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3 Step 3 Projects cinematic parallax.
+  Action: Added GSAP ScrollTrigger parallax to project images and replaced placeholders with images.
+  File: src/components/sections/Projects.tsx

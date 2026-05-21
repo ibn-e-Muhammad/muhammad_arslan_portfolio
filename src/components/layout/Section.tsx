@@ -1,14 +1,20 @@
 import type { ReactNode } from "react";
+import { forwardRef } from "react";
 
 type SectionProps = {
   children: ReactNode;
   className?: string;
 };
 
-export default function Section({ children, className }: SectionProps) {
+const Section = forwardRef<HTMLElement, SectionProps>(function Section(
+  { children, className },
+  ref,
+) {
   return (
-    <section className={`py-section-gap ${className ?? ""}`.trim()}>
+    <section ref={ref} className={`py-section-gap ${className ?? ""}`.trim()}>
       {children}
     </section>
   );
-}
+});
+
+export default Section;
