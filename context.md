@@ -156,3 +156,21 @@
   Instruction: Phase 3.6 Step 2 — Replace placeholders with real images.
   Action: Hero portrait placeholder replaced with hero_profile_pic.png using Next.js Image with blur placeholder and priority loading. About sticky portrait placeholder replaced with same hero_profile_pic.png. Projects section Unsplash placeholder replaced with local background_projects.png (terra-themed abstract). All use Next.js Image component for optimization.
   Files: src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.7 — Six-fix cinematic corrections.
+  Action (Fix 1 — Hero blurred orbs): Removed SVG gooey filter. Restored orbs to blurred ambient haze (blur-[100px]+) with transparency. Slowed movement to 12-18s duration with ±120 range for gentle drift.
+  Action (Fix 2 — Hero portrait hue + size): Added blurred terra/red glow divs behind the portrait image (blur-[60px] and blur-[80px]). Increased portrait from w-[70%] max-w-sm to w-[85%] max-w-md. Grid column ratio adjusted to 1.2fr/0.8fr.
+  Action (Fix 3 — About paragraph carousel): Replaced batch reveal with per-paragraph ScrollTrigger carousel. Each paragraph gets two ScrollTriggers: enter zone (top 75%→35%) fades 0.2→1 and scales 0.92→1, exit zone (top 30%→5%) fades 1→0.15 and scales 1→0.9. Heading is sticky alongside portrait. Text replaced with substantive content paragraphs.
+  Action (Fix 4 — Projects section background): Moved background_projects.png from individual project images to section-level background (absolute fill, 7% opacity). Individual projects now use oatmeal placeholder divs with parallax.
+  Action (Fix 5 — About dark background): Changed About section to bg-void text-canvas matching Contact section's inverted palette.
+  Action (Fix 6 — Parallax restoration): Verified Hero ScrollTrigger wrappers intact (scrub 1 / 1.2 over 800px). About now has full scroll-driven parallax via paragraph carousel. Projects parallax confirmed working with scrub 1.5.
+  Files: src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.8 — Parallax and Motion enhancements.
+  Action (Jellyfish Orbs): Updated GSAP animations for `.glow-orb` elements in Hero and About sections to behave like jellyfish (larger randomized movement range of ±400, varied scaling from 0.6 to 1.5, randomized rotation, and `repeatRefresh: true` for dynamic trajectories).
+  Action (Hero Parallax): Intensified Hero scroll-out parallax values (text wrapper moves to y=250 over 1200px scroll, image wrapper moves to y=150 with scrub 2).
+  Action (About Parallax): Added true y-axis movement to the paragraph carousel so paragraphs actually translate vertically (y=120 to y=0 to y=-120) as they scroll, compounding the visual parallax effect.
+  Action (Projects Adjustments): Reduced vertical spacing between project picture and heading (`mb-12` -> `mb-4`, `py-10` -> `pt-2 pb-10`). Intensified the internal image parallax by increasing target from `yPercent: -20 -> 20` to `yPercent: -30 -> 30`, and correspondingly increasing the placeholder image height to `180%` to prevent edges from showing.
+  Files: src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx

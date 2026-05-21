@@ -8,6 +8,7 @@ import Section from "../layout/Section";
 import Container from "../layout/Container";
 import projectsBg from "../../assets/images/background_projects.png";
 
+
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
@@ -40,14 +41,14 @@ export default function Projects() {
       const wrappers = gsap.utils.toArray<HTMLElement>(".project-media");
 
       wrappers.forEach((wrapper) => {
-        const image = wrapper.querySelector<HTMLImageElement>("img");
+        const image = wrapper.querySelector<HTMLElement>(".project-img");
         if (!image) return;
 
         gsap.fromTo(
           image,
-          { yPercent: -20 },
+          { yPercent: -30 },
           {
-            yPercent: 20,
+            yPercent: 30,
             ease: "none",
             scrollTrigger: {
               trigger: wrapper,
@@ -83,13 +84,24 @@ export default function Projects() {
   }, []);
 
   return (
-    <Section ref={containerRef}>
+    <Section ref={containerRef} className="relative overflow-hidden">
+      {/* ── Section background image ──────────────────── */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <Image
+          src={projectsBg}
+          alt=""
+          fill
+          className="object-cover opacity-[0.2]"
+          placeholder="blur"
+        />
+      </div>
+
       <Container>
         <div className="flex flex-col gap-section-gap">
           {/* Section heading */}
           <div className="text-center">
             <h2
-              className="font-serif text-terra"
+              className="hero-title font-serif text-terra"
               style={{ fontSize: "var(--text-h2)" }}
             >
               Selected Works
@@ -103,18 +115,14 @@ export default function Projects() {
                 key={project.id}
                 className="relative mb-40 flex min-h-[80vh] flex-col justify-center"
               >
-                {/* Cinematic image with heavy-scrub parallax */}
-                <div className="project-media mb-12 w-full aspect-[4/3] md:aspect-[21/9] bg-oatmeal relative overflow-hidden rounded-sm">
-                  <Image
-                    src={projectsBg}
-                    alt={project.title}
-                    className="h-[130%] w-full object-cover"
-                    placeholder="blur"
-                  />
+                {/* Cinematic project poster — oatmeal placeholder with parallax */}
+                <div className="project-media mb-4 w-full aspect-[4/3] md:aspect-[21/9] bg-oatmeal relative overflow-hidden rounded-sm">
+                  <div className="project-img h-[180%] w-full bg-oatmeal" />
+                  <img src="src/assets/images/hero_profile_pic.png" alt="Project thumbnail" className="absolute inset-0 h-full w-full object-cover" />
                 </div>
 
                 {/* Project info — generous height for eye appeal */}
-                <div className="project-info flex flex-col gap-4 py-10 md:flex-row md:items-end md:justify-between border-b border-ink/10">
+                <div className="project-info flex flex-col gap-4 pt-2 pb-10 md:flex-row md:items-end md:justify-between border-b border-ink/10">
                   <h3 className="font-serif text-5xl lg:text-7xl leading-tight">
                     {project.title}
                   </h3>

@@ -29,50 +29,58 @@ export default function Hero() {
 
       gsap.fromTo(
         ".hero-image",
-        { y: 80, opacity: 0 },
+        { y: 80, opacity: 0, scale: 0.95 },
         {
           y: 0,
           opacity: 1,
+          scale: 1,
           duration: 1.6,
           delay: 0.3,
           ease: "power3.out",
         },
       );
 
-      /* ── 2. Liquid gooey orbs — continuous float ─────── */
-      gsap.to(".glow-orb", {
-        x: () => gsap.utils.random(-300, 300),
-        y: () => gsap.utils.random(-300, 300),
-        scale: () => gsap.utils.random(0.8, 1.4),
-        duration: 8,
-        ease: "sine.inOut",
-        stagger: 0.2,
-        repeat: -1,
-        yoyo: true,
+      /* ── 2. Ambient blurred orbs — Dynamic Jellyfish motion ── */
+      gsap.utils.toArray<HTMLElement>(".glow-orb").forEach((orb, i) => {
+        gsap.to(orb, {
+          x: () => gsap.utils.random(-300, 300),
+          y: () => gsap.utils.random(-300, 300),
+          scaleX: () => gsap.utils.random(0.6, 1.5),
+          scaleY: () => gsap.utils.random(0.6, 1.5),
+          rotation: () => gsap.utils.random(-90, 90),
+          duration: () => gsap.utils.random(2, 6),
+          ease: "sine.inOut",
+          repeat: -1,
+          repeatRefresh: true,
+          yoyo: true,
+          delay: i * 0.5,
+        });
       });
 
       /* ── 3. Scroll-out — targets WRAPPER divs only ──── */
+      /*    Wrapper is a separate parent so the scrub tween
+            never fights the load reveal on inner children. */
       gsap.to(".hero-content-wrapper", {
-        y: 100,
+        y: 250,
         opacity: 0,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=800",
-          scrub: 1,
+          end: "+=1200",
+          scrub: 1.5,
         },
       });
 
       gsap.to(".hero-image-wrapper", {
-        y: 60,
+        y: 150,
         opacity: 0,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=800",
-          scrub: 1.2,
+          end: "+=1200",
+          scrub: 2,
         },
       });
     }, sectionRef);
@@ -82,38 +90,15 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
-      {/* ── Hidden SVG gooey filter definition ──────────── */}
-      <svg className="absolute hidden h-0 w-0">
-        <defs>
-          <filter id="goo">
-            <feGaussianBlur
-              in="SourceGraphic"
-              stdDeviation="25"
-              result="blur"
-            />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -20"
-              result="goo"
-            />
-            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-          </filter>
-        </defs>
-      </svg>
-
-      {/* ── Liquid gooey background ────────────────────── */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-40 mix-blend-multiply"
-        style={{ filter: "url(#goo)" }}
-      >
-        <div className="glow-orb absolute top-1/3 left-1/3 h-[35vw] w-[35vw] rounded-full bg-terra" />
-        <div className="glow-orb absolute top-1/2 right-1/3 h-[30vw] w-[30vw] rounded-full bg-[#8A3A33]" />
-        <div className="glow-orb absolute bottom-1/3 left-1/2 h-[40vw] w-[40vw] rounded-full bg-[#D4A373]" />
+      {/* ── Blurred ambient orbs — liquid haze background ── */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="glow-orb absolute bottom-1/4 left-1/4 h-[50vw] w-[50vw] rounded-full bg-terra blur-[60px]" />
+        <div className="glow-orb absolute top-1/2 right-1/4 h-[40vw] w-[40vw] rounded-full bg-oatmeal blur-[80px]" />
+        <div className="glow-orb absolute top-1/4 left-1 h-[55vw] w-[55vw] rounded-full bg-[#8a3a33da] blur-[60px]" />
       </div>
 
       <Container className="relative flex min-h-screen items-center">
-        <div className="grid w-full grid-cols-1 items-end gap-12 lg:grid-cols-[1.25fr_0.75fr]">
+        <div className="grid w-full grid-cols-1 items-end gap-12 lg:grid-cols-[1.2fr_0.8fr]">
           {/* Left — Copy */}
           <div className="hero-content-wrapper flex flex-col gap-8">
             <p className="hero-tag text-sm uppercase tracking-[0.2em] text-ink/60">
@@ -123,7 +108,7 @@ export default function Hero() {
               className="hero-title relative z-10 leading-[1.05]"
               style={{ fontSize: "var(--text-hero)" }}
             >
-              <span className="block text-terra">Creative</span>
+              <span className="block">Creative</span>
               <span className="block">Developer</span>
             </h1>
             <p className="hero-body relative z-10 mt-2 max-w-xl text-lg leading-relaxed text-ink/70">
@@ -132,16 +117,22 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Right — Portrait */}
+          {/* Right — Portrait with blurred hue shadow */}
           <div className="hero-image-wrapper flex justify-end">
-            <div className="hero-image aspect-[3/4] w-[70%] max-w-sm overflow-hidden rounded-3xl">
-              <Image
-                src={heroPortrait}
-                alt="Muhammad Arslan — portrait"
-                className="h-full w-full object-cover"
-                placeholder="blur"
-                priority
-              />
+            <div className="hero-image relative w-[85%] max-w-md">
+              {/* Blurred hue glow behind the portrait */}
+              <div className="absolute -inset-8 rounded-full bg-terra/30 blur-[60px]" />
+              <div className="absolute -inset-12 translate-x-4 translate-y-6 rounded-full bg-[#8A3A33]/20 blur-[80px]" />
+              {/* Actual portrait */}
+              <div className="relative aspect-[3/4] overflow-hidden rounded-3xl">
+                <Image
+                  src={heroPortrait}
+                  alt="Muhammad Arslan — portrait"
+                  className="h-full w-full object-cover"
+                  placeholder="blur"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>

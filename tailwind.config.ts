@@ -7,7 +7,7 @@ const config: Config = {
     colors: {
       canvas: "#F9F8F6",
       ink: "#1C1A19",
-      terra: "#9C4A43",
+      terra: "#0292b7",
       oatmeal: "#EFECE7",
       void: "#141211",
       transparent: "transparent",
