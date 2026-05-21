@@ -8,10 +8,7 @@ export default function Contact() {
       </div>
 
       <div>
-        <h2
-          className="font-serif leading-[0.9] transition-colors duration-500 hover:text-terra"
-          style={{ fontSize: "var(--text-hero)" }}
-        >
+        <h2 className="font-serif text-6xl md:text-8xl lg:text-9xl leading-[0.9] transition-colors duration-500 hover:text-terra">
           <span className="block">Let's build</span>
           <span className="block">something timeless.</span>
         </h2>

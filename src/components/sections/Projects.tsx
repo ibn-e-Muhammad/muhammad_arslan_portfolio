@@ -34,10 +34,10 @@ export default function Projects() {
           {projects.map((project) => (
             <article
               key={project.id}
-              className="mb-section-gap flex min-h-[80vh] flex-col justify-center"
+              className="relative mb-32 flex min-h-[80vh] flex-col justify-center"
             >
-              <div className="w-full aspect-video md:aspect-[21/9] bg-oatmeal" />
-              <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div className="mb-8 w-full aspect-[4/3] md:aspect-[21/9] bg-oatmeal relative overflow-hidden" />
+              <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <h3 className="font-serif text-4xl lg:text-6xl">
                   {project.title}
                 </h3>

@@ -96,3 +96,8 @@
   Instruction: Assemble master page with Hero, About, Projects, Contact in order.
   Action: Verified src/app/page.tsx already matches the required order with no extra wrappers.
   File: src/app/page.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 2.5 visual corrections for Contact, Projects, and Hero sections.
+  Action: Enforced Contact inversion + massive serif heading, rebuilt Projects blocks to editorial spec, and updated Hero ambient layer/z-index + removed shadows.
+  Files: src/components/sections/Contact.tsx, src/components/sections/Projects.tsx, src/components/sections/Hero.tsx
