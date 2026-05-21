@@ -121,7 +121,13 @@ export default function Hero() {
               <div className="absolute -inset-8 rounded-full bg-terra/30 blur-[60px]" />
               <div className="absolute -inset-12 translate-x-4 translate-y-6 rounded-full bg-[#8A3A33]/20 blur-[80px]" />
               {/* Actual portrait */}
-              <div className="relative aspect-[3/4] overflow-hidden rounded-3xl">
+              <div
+                className="relative aspect-[3/4] overflow-hidden rounded-sm"
+                style={{
+                  WebkitMaskImage:
+                    "-webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%); mask-image: radial-gradient(ellipse at center, black 40%, transparent 95%)",
+                }}
+              >
                 <Image
                   src={heroPortrait}
                   alt="Muhammad Arslan — portrait"

@@ -113,7 +113,7 @@ export default function About() {
           {/* Sticky portrait — pinned while text scrolls */}
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-24">
-              <div className="aspect-[3/4] w-full overflow-hidden rounded-3xl">
+              <div className="aspect-[3/4] w-full overflow-hidden rounded-3xl" style={{ WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)", maskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)" }}>
                 <Image
                   src={heroPortrait}
                   alt="Muhammad Arslan — portrait"

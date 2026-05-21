@@ -2,12 +2,10 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 import gsap from "gsap";
-import ContactModal from "./ContactModal";
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const textRef = useRef<HTMLHeadingElement | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const textRef = useRef<HTMLAnchorElement | null>(null);
   const [localTime, setLocalTime] = useState("");
 
   /* ── Live clock ──────────────────────────────── */
@@ -78,15 +76,15 @@ export default function Contact() {
         </div>
 
         {/* Central statement — magnetic */}
-        <div className="relative">
-          <h2
+        <div className="relative z-10">
+          <a
             ref={textRef}
-            onClick={() => setModalOpen(true)}
-            className="cursor-pointer font-serif text-5xl md:text-7xl lg:text-9xl leading-[0.95] transition-colors duration-500 hover:text-terra"
+            href="mailto:muhammadarslan23156@gmail.com"
+            className="block cursor-pointer font-serif text-5xl md:text-7xl lg:text-9xl leading-[0.95] transition-colors duration-500 hover:text-terra"
           >
             <span className="block">Let&apos;s build</span>
             <span className="block">something timeless.</span>
-          </h2>
+          </a>
         </div>
 
         {/* Footer info */}
@@ -130,11 +128,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ── Contact Modal ──────────────────────── */}
-      <ContactModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
     </>
   );
 }

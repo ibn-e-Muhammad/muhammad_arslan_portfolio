@@ -209,3 +209,28 @@
   Action (Preloader): Increased duration of the 0→100 count to 2.8s (power3.inOut) and curtain drop to 1.8s for a far more gradual, cinematic build-up.
   Action (Mailto Fix): Replaced `window.open` with `window.location.href = mailto:...` in ContactModal.tsx, which bypasses popup blockers and reliably opens the user's default email client.
   Files: src/components/layout/Preloader.tsx, src/components/layout/SmoothScroll.tsx, src/components/sections/ContactModal.tsx, src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 4.2 — Native Mailto & Mask Edges.
+  Action (Step 1 — Native Mailto in Contact):
+    - Completely removed `ContactModal.tsx` import and usage from `Contact.tsx`.
+    - Converted the magnetic `<h2>` into a native `<a>` tag with `href="mailto:muhammadarslan23156@gmail.com"`.
+    - Maintained exact classes and GSAP magnetic hover properties by updating the ref type to `HTMLAnchorElement`.
+  Action (Step 2 — Portrait Edge Blurring):
+    - Added an inline `style` with `mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)` to the portrait wrappers in `Hero.tsx` and `About.tsx` so the top and bottom edges fade smoothly into the void.
+  Files: src/components/sections/Contact.tsx, src/components/sections/Hero.tsx, src/components/sections/About.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 4.3 — Contact CTA Fix.
+  Action (Mailto Link):
+    - Added `z-10` and `relative` positioning to the wrapper of the `<a>` tag so it is not hidden under the glowing orb overlays.
+    - Added `target="_blank"` and `rel="noopener noreferrer"`.
+    - Added an explicit `onClick` handler (`window.location.href = "mailto:..."`) as a fallback in case Next.js routing intercepts the default behavior.
+  Files: src/components/sections/Contact.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 4.4 — Contact Mailto User Gesture Fix.
+  Action (Mailto Link):
+    - Removed `target="_blank"`, `rel="noopener noreferrer"`, and the manual `onClick` fallback from the Contact CTA link.
+    - Opening a `mailto:` link in a new tab or via async JavaScript wrappers triggers Chrome's anti-popup restrictions ("user gesture is required"). Native `mailto:` links work flawlessly as long as they are plain `<a>` tags with no artificial redirection.
+  Files: src/components/sections/Contact.tsx
