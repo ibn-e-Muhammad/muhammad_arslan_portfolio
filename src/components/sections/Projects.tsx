@@ -8,7 +8,6 @@ import Section from "../layout/Section";
 import Container from "../layout/Container";
 import projectsBg from "../../assets/images/background_projects.png";
 
-
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
@@ -54,7 +53,7 @@ export default function Projects() {
               trigger: wrapper,
               start: "top bottom",
               end: "bottom top",
-              scrub: 1.5,
+              scrub: 2.5,
             },
           },
         );
@@ -113,20 +112,19 @@ export default function Projects() {
             {projects.map((project) => (
               <article
                 key={project.id}
-                className="relative mb-40 flex min-h-[80vh] flex-col justify-center"
+                className="relative mb-20 md:mb-40 flex min-h-[50vh] md:min-h-[80vh] flex-col justify-center"
               >
                 {/* Cinematic project poster — oatmeal placeholder with parallax */}
                 <div className="project-media mb-4 w-full aspect-[4/3] md:aspect-[21/9] bg-oatmeal relative overflow-hidden rounded-sm">
                   <div className="project-img h-[180%] w-full bg-oatmeal" />
-                  <img src="src/assets/images/hero_profile_pic.png" alt="Project thumbnail" className="absolute inset-0 h-full w-full object-cover" />
                 </div>
 
-                {/* Project info — generous height for eye appeal */}
-                <div className="project-info flex flex-col gap-4 pt-2 pb-10 md:flex-row md:items-end md:justify-between border-b border-ink/10">
-                  <h3 className="font-serif text-5xl lg:text-7xl leading-tight">
+                {/* Project info — stacks on mobile, row on desktop */}
+                <div className="project-info flex flex-col gap-3 pt-2 pb-8 md:gap-4 md:pb-10 md:flex-row md:items-end md:justify-between border-b border-ink/10">
+                  <h3 className="font-serif text-4xl md:text-5xl lg:text-7xl leading-tight">
                     {project.title}
                   </h3>
-                  <div className="flex items-center gap-6 text-xs uppercase tracking-widest text-ink/60">
+                  <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs uppercase tracking-widest text-ink/60">
                     <span className="font-sans">{project.category}</span>
                     <span className="font-sans text-ink/30">—</span>
                     <span className="font-sans">{project.year}</span>

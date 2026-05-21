@@ -32,8 +32,9 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       if (lenisRef.current) return;
 
       lenisRef.current = new Lenis({
-        lerp: 0.08,
+        lerp: 0.04,
         smoothWheel: true,
+        wheelMultiplier: 0.9,
       });
 
       const raf = (time: number) => {

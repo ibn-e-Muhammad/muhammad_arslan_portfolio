@@ -174,3 +174,38 @@
   Action (About Parallax): Added true y-axis movement to the paragraph carousel so paragraphs actually translate vertically (y=120 to y=0 to y=-120) as they scroll, compounding the visual parallax effect.
   Action (Projects Adjustments): Reduced vertical spacing between project picture and heading (`mb-12` -> `mb-4`, `py-10` -> `pt-2 pb-10`). Intensified the internal image parallax by increasing target from `yPercent: -20 -> 20` to `yPercent: -30 -> 30`, and correspondingly increasing the placeholder image height to `180%` to prevent edges from showing.
   Files: src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 4 — Cinematic Polish & Micro-Interactions.
+
+  Action (Step 1 — Preloader):
+    Created src/components/layout/Preloader.tsx — fixed full-screen z-[100] with bg-void and terra-hinted hue blobs.
+    GSAP proxy counter animates 0→100 over 1.8s (power2.inOut), then curtain-drops yPercent:-100 (1.2s, power4.inOut).
+    Component returns null after animation completes to unblock interaction.
+    Added <Preloader /> to src/app/layout.tsx before <Grain />.
+    Improved metadata title and description for SEO.
+
+  Action (Step 2 — Contact Magnetic + Socials + Modal):
+    Rewrote src/components/sections/Contact.tsx with:
+    - Magnetic GSAP hover on H2 (pulls toward cursor ±25px max, snaps back with elastic.out).
+    - Clicking H2 opens a contact modal.
+    - Created src/components/sections/ContactModal.tsx — bg-void modal with animated open/close, ambient glow orbs, email+message form, mailto: action to muhammadarslan23156@gmail.com.
+    - Social links: LinkedIn (muhammad-arslan-g), WhatsApp (wa.me/923116683784), GitHub (ibn-e-Muhammad), Instagram (_muhammad__arslan_). Twitter removed.
+    - Live clock replaces static time string.
+
+  Action (Step 3 — Mobile Responsiveness):
+    Hero.tsx — H1 scales responsively (text-5xl → text-9xl). Grid stacks with image first on mobile (order-1/order-2). Portrait width adapts (w-[60%] mobile, w-[85%] desktop). Tag and body text scale down.
+    Projects.tsx — min-h reduced on mobile (50vh vs 80vh). Bottom margin reduced (mb-20 vs mb-40). H3 scales down (text-4xl mobile). Meta text shrinks. Padding adjusts.
+
+  Files: src/components/layout/Preloader.tsx [NEW], src/components/sections/ContactModal.tsx [NEW], src/components/sections/Contact.tsx, src/app/layout.tsx, src/components/sections/Hero.tsx, src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 4.1 — Polish fixes (Smoothness, Parallax, Mailto).
+  Action (Smoothness & Parallax):
+    - SmoothScroll.tsx: Lowered Lenis `lerp` from 0.08 to 0.04 to make scrolling noticeably more buttery.
+    - Hero.tsx: Increased `scrub` lag from 1.5/2 to 2.5/3.5, and increased total parallax distance to y: 350 and y: 200, making the floating effect far more pronounced and velvety.
+    - About.tsx: Increased carousel paragraph `scrub` to 1.5 and parallax drop/raise to y: 150.
+    - Projects.tsx: Increased image `scrub` to 2.5.
+  Action (Preloader): Increased duration of the 0→100 count to 2.8s (power3.inOut) and curtain drop to 1.8s for a far more gradual, cinematic build-up.
+  Action (Mailto Fix): Replaced `window.open` with `window.location.href = mailto:...` in ContactModal.tsx, which bypasses popup blockers and reliably opens the user's default email client.
+  Files: src/components/layout/Preloader.tsx, src/components/layout/SmoothScroll.tsx, src/components/sections/ContactModal.tsx, src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx

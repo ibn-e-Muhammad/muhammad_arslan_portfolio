@@ -56,21 +56,21 @@ export default function About() {
 
       paragraphs.forEach((para) => {
         // Start: fully dimmed, slightly smaller, and shifted down
-        gsap.set(para, { opacity: 0.2, scale: 0.92, y: 120 });
+        gsap.set(para, { opacity: 0.2, scale: 0.92, y: 150 });
 
         // Animate IN as it enters the center zone
         ScrollTrigger.create({
           trigger: para,
           start: "top 85%",
           end: "top 40%",
-          scrub: 1,
+          scrub: 1.5,
           onUpdate: (self) => {
             const progress = self.progress;
-            // Ease in: 0.2 → 1 opacity, 0.92 → 1 scale, move up 120px
+            // Ease in: 0.2 → 1 opacity, 0.92 → 1 scale, move up 150px
             gsap.set(para, {
               opacity: 0.2 + progress * 0.8,
               scale: 0.92 + progress * 0.08,
-              y: 120 - progress * 120,
+              y: 150 - progress * 150,
             });
           },
         });
@@ -80,14 +80,14 @@ export default function About() {
           trigger: para,
           start: "top 40%",
           end: "top -5%",
-          scrub: 1,
+          scrub: 1.5,
           onUpdate: (self) => {
             const progress = self.progress;
-            // Ease out: 1 → 0.15 opacity, 1 → 0.9 scale, move up another 120px
+            // Ease out: 1 → 0.15 opacity, 1 → 0.9 scale, move up another 150px
             gsap.set(para, {
               opacity: 1 - progress * 0.85,
               scale: 1 - progress * 0.1,
-              y: 0 - progress * 120,
+              y: 0 - progress * 150,
             });
           },
         });
