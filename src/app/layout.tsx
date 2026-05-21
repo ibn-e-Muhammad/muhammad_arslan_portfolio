@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import Grain from "../components/layout/Grain";
 import SmoothScroll from "../components/layout/SmoothScroll";
 
 import "../styles/globals.css";
@@ -28,7 +29,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${serif.variable} ${sans.variable} bg-canvas text-ink`}>
+      <body className={`${serif.variable} ${sans.variable} bg-canvas text-ink antialiased`}>
+        <Grain />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

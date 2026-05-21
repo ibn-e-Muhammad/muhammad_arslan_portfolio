@@ -14,6 +14,7 @@ export default function About() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Staggered reveal for right-column text
       gsap.fromTo(
         ".about-reveal",
         { y: 40, opacity: 0 },
@@ -30,6 +31,23 @@ export default function About() {
           },
         },
       );
+
+      // Fade out text as it scrolls past the top
+      const paragraphs =
+        gsap.utils.toArray<HTMLElement>(".about-reveal");
+      paragraphs.forEach((el) => {
+        gsap.to(el, {
+          opacity: 0,
+          y: -20,
+          ease: "power2.in",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 15%",
+            end: "top 0%",
+            scrub: true,
+          },
+        });
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -38,19 +56,22 @@ export default function About() {
   return (
     <Section ref={containerRef}>
       <Container>
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-16">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-20">
+          {/* Sticky portrait — pinned while text scrolls */}
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-24">
               <div className="aspect-[3/4] w-full rounded-sm bg-oatmeal" />
             </div>
           </div>
+
+          {/* Scrollable text column */}
           <div ref={rightColumnRef} className="lg:col-span-7">
-            <div className="space-y-8">
-              <h2 className="about-reveal font-serif text-4xl lg:text-6xl">
+            <div className="flex flex-col gap-10">
+              <h2 className="about-reveal font-serif text-4xl lg:text-6xl leading-tight text-terra">
                 An Editorial Approach to Digital Craft
               </h2>
               <div
-                className="space-y-8 text-ink/80 leading-relaxed"
+                className="flex flex-col gap-8 text-ink/80 leading-relaxed"
                 style={{ fontSize: "var(--text-body)" }}
               >
                 <p className="about-reveal">

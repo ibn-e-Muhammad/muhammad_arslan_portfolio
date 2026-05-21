@@ -8,88 +8,111 @@ import Container from "../layout/Container";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
-  const containerRef = useRef<HTMLElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      /* ── 1. Entry reveal ─────────────────────────────── */
       gsap.fromTo(
-        [".hero-title", ".hero-body"],
-        { y: 50, opacity: 0 },
+        [".hero-tag", ".hero-title", ".hero-body"],
+        { y: 60, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1.2,
-          stagger: 0.2,
+          duration: 1.4,
+          stagger: 0.25,
           ease: "power3.out",
         },
       );
 
       gsap.fromTo(
-        ".hero-glow",
-        { opacity: 0, scale: 0.8 },
+        ".hero-image",
+        { y: 80, opacity: 0 },
         {
-          opacity: 0.2,
-          scale: 1,
-          duration: 2.5,
-          ease: "power2.out",
+          y: 0,
+          opacity: 1,
+          duration: 1.6,
+          delay: 0.3,
+          ease: "power3.out",
         },
       );
 
-      // Parallax movement on scroll (Y translation only)
-      gsap.to([`.hero-title`, `.hero-image`], {
+      /* ── 2. Liquid ambient orbs — continuous float ──── */
+      gsap.utils.toArray<HTMLElement>(".glow-orb").forEach((orb, i) => {
+        gsap.to(orb, {
+          x: `random(-150, 150)`,
+          y: `random(-150, 150)`,
+          duration: 8 + i * 2,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+          delay: i * 0.5,
+        });
+      });
+
+      /* ── 3. Scroll-out: slow sink + fade over 800px ── */
+      gsap.to([".hero-title", ".hero-body", ".hero-tag"], {
         y: 100,
+        opacity: 0,
         ease: "none",
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: sectionRef.current,
           start: "top top",
-          end: "center top",
+          end: "+=800",
           scrub: 1,
         },
       });
 
-      // Separate opacity fade only when hero reaches top
-      gsap.to([`.hero-title`, `.hero-image`], {
-        opacity: 0.2,
-        duration: 0.75,
-        ease: "power2.inOut",
+      gsap.to(".hero-image", {
+        y: 60,
+        opacity: 0,
+        ease: "none",
         scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 30%",
-          end: "top 10%",
-          scrub: 0,
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=800",
+          scrub: 1.2,
         },
       });
-    }, containerRef);
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
     <section
-      ref={containerRef}
+      ref={sectionRef}
       className="relative min-h-screen overflow-hidden"
     >
-      <div className="hero-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] bg-terra rounded-full blur-[120px] opacity-20 pointer-events-none" />
-      <div className="pointer-events-none fixed -top-24 -left-24 h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-terra/30 to-transparent blur-3xl opacity-20" />
+      {/* ── Liquid ambient background ──────────────────── */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="glow-orb absolute top-1/4 left-1/4 h-[50vw] w-[50vw] rounded-full bg-terra/30 blur-[100px]" />
+        <div className="glow-orb absolute top-1/2 right-1/4 h-[40vw] w-[40vw] rounded-full bg-[#8A3A33]/20 blur-[120px]" />
+        <div className="glow-orb absolute bottom-1/4 left-1/2 h-[60vw] w-[60vw] rounded-full bg-oatmeal/40 blur-[90px]" />
+      </div>
+
       <Container className="relative flex min-h-screen items-center">
         <div className="grid w-full grid-cols-1 items-end gap-12 lg:grid-cols-[1.25fr_0.75fr]">
-          <div className="space-y-12">
-            <p className="text-sm uppercase tracking-[0.2em] text-ink/60">
+          {/* Left — Copy */}
+          <div className="flex flex-col gap-8">
+            <p className="hero-tag text-sm uppercase tracking-[0.2em] text-ink/60">
               Cinematic. Editorial. Precise.
             </p>
             <h1
-              className="hero-title relative z-10 leading-[0.95]"
+              className="hero-title relative z-10 leading-[1.05]"
               style={{ fontSize: "var(--text-hero)" }}
             >
-              <span className="block">Creative</span>
+              <span className="block text-terra">Creative</span>
               <span className="block">Developer</span>
             </h1>
-            <p className="hero-body relative z-10 max-w-xl text-ink/70">
+            <p className="hero-body relative z-10 mt-2 max-w-xl text-lg leading-relaxed text-ink/70">
               Crafting immersive digital experiences with a focus on atmosphere,
               restraint, and detail.
             </p>
           </div>
-          <div className="flex justify-end lg:justify-end">
+
+          {/* Right — Portrait placeholder */}
+          <div className="flex justify-end">
             <div className="hero-image aspect-[3/4] w-[70%] max-w-sm rounded-3xl bg-oatmeal" />
           </div>
         </div>

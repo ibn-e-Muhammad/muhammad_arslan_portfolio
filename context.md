@@ -116,3 +116,28 @@
   Instruction: Phase 3 Step 3 Projects cinematic parallax.
   Action: Added GSAP ScrollTrigger parallax to project images and replaced placeholders with images.
   File: src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Layout/Spacing hotfix — spacing config and section corrections.
+  Action: Moved tailwind.config.ts theme.spacing to theme.extend.spacing so all default Tailwind spacing utilities are restored. Fixed Hero (leading, gaps), About (grid gap, leading), Projects (Container wrapper, heading size, info row padding), and Contact (responsive padding so text doesn't touch edges).
+  Files: tailwind.config.ts, src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx, src/components/sections/Contact.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.5 Step 1 — Film Grain overlay.
+  Action: Created Grain.tsx component (fixed inset-0, z-50, pointer-events-none, opacity 0.04) with inline SVG fractalNoise filter. Imported into layout.tsx before SmoothScroll. Also added antialiased class to body.
+  Files: src/components/layout/Grain.tsx, src/app/layout.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.5 Step 2 — Hero liquid atmosphere & scroll physics.
+  Action: Replaced single glow div with three independently-animated liquid orbs (terra/deep-red/oatmeal) using continuous GSAP sine.inOut yoyo loops. Scroll-out now fades text over 800px with scrub:1 damping. Hero image has separate scrub:1.2 for staggered depth. Added entry animation for tagline.
+  File: src/components/sections/Hero.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.5 Step 3 — Projects parallax physics fix.
+  Action: Changed scrub from true to 1.5 for heavy damping. Increased parallax yPercent from ±15 to ±20. Image height bumped to 130% for deeper travel. Added scroll-triggered reveal on project info rows with border-b separator. Added rounded-sm on media wrappers.
+  File: src/components/sections/Projects.tsx
+
+- Date: 2026-05-21
+  Instruction: Phase 3.5 Step 4 — Terra color accents in typography.
+  Action: Applied text-terra to Hero 'Creative' span, About h2, and Projects 'Selected Works' h2 for editorial color language across the site.
+  Files: src/components/sections/Hero.tsx, src/components/sections/About.tsx, src/components/sections/Projects.tsx

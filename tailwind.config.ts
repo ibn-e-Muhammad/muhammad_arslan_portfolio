@@ -17,10 +17,11 @@ const config: Config = {
       serif: ["var(--font-serif)", "ui-serif", "Georgia", "serif"],
       sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
     },
-    spacing: {
-      "section-gap": "clamp(6rem, 15vw, 12rem)",
+    extend: {
+      spacing: {
+        "section-gap": "clamp(6rem, 15vw, 12rem)",
+      },
     },
-    extend: {},
   },
   plugins: [
     plugin(({ addUtilities }) => {
