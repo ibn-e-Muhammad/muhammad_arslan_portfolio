@@ -102,15 +102,14 @@ export default function Hero() {
           {/* Left — Copy */}
           <div className="hero-content-wrapper order-2 flex flex-col gap-4 md:order-1 md:gap-8">
             <p className="hero-tag text-xs md:text-sm uppercase tracking-[0.2em] text-ink/60">
-              Cinematic. Editorial. Precise.
+              LOGICAL. SCALABLE. PRECISE.
             </p>
-            <h1 className="hero-title relative z-10 text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-serif leading-[1.05]">
-              <span className="block">Creative</span>
-              <span className="block">Developer</span>
+            <h1 className="hero-title relative z-10 text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-serif leading-[1.02] tracking-tighter">
+              <span className="block text-terra">Full-Stack</span>
+              <span className="block">AI Engineer</span>
             </h1>
-            <p className="hero-body relative z-10 mt-2 max-w-xl text-base md:text-lg leading-relaxed text-ink/70">
-              Crafting immersive digital experiences with a focus on atmosphere,
-              restraint, and detail.
+            <p className="hero-body relative z-10 mt-2 max-w-xl font-sans text-base md:text-lg leading-relaxed tracking-normal text-ink/70">
+              Architecting intelligent systems and high-end digital experiences. Bridging the gap between complex Ai systems that scale and elegant Web Architecture that Awe's every eye.
             </p>
           </div>
 

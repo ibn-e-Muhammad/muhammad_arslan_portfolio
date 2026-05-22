@@ -75,11 +75,11 @@ export default function About() {
           },
         });
 
-        // Animate OUT as it leaves the center zone upward
+        // Animate OUT as it reaches the heading line
         ScrollTrigger.create({
           trigger: para,
-          start: "top 40%",
-          end: "top -5%",
+          start: "top 30%",
+          end: "top 10%",
           scrub: 1.5,
           onUpdate: (self) => {
             const progress = self.progress;
@@ -104,7 +104,7 @@ export default function About() {
     >
       {/* ── Blurred ambient orbs — liquid haze background ── */}
       <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
-        <div className="glow-orb absolute top-1/4 left-1/2 h-[50vw] w-[50vw] rounded-full bg-terra blur-[60px]" />
+        <div className="glow-orb absolute top-1/4 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9] blur-[40px]" />
         <div className="glow-orb absolute top-1/2 right-1/4 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33] blur-[60px]" />
         <div className="glow-orb absolute top-1/4 right-1/4 h-[30vw] w-[30vw] rounded-full bg-void blur-[80px]" />
       </div>
@@ -113,7 +113,15 @@ export default function About() {
           {/* Sticky portrait — pinned while text scrolls */}
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-24">
-              <div className="aspect-[3/4] w-full overflow-hidden rounded-3xl" style={{ WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)", maskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)" }}>
+              <div
+                className="aspect-[3/4] w-full overflow-hidden rounded-3xl"
+                style={{
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+                  maskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+                }}
+              >
                 <Image
                   src={heroPortrait}
                   alt="Muhammad Arslan — portrait"
@@ -128,78 +136,31 @@ export default function About() {
           <div ref={textTrackRef} className="lg:col-span-7">
             <div className="flex flex-col gap-6">
               {/* Sticky heading — stays pinned alongside portrait */}
-              <div className="lg:sticky lg:top-24 lg:z-10 lg:pb-8">
-                <h2 className="block about-heading font-serif lg:text-4xl lg:text-6xl leading-tight p-2 text-canvas transition-colors duration-500 hover:text-terra rounded-sm backdrop-blur-3xl">
-                  An Editorial Approach to Digital Craft
+              <div className="lg:sticky lg:top-20 lg:z-10 lg:pb-8">
+                <h2 className="block about-heading font-serif lg:text-4xl leading-tight p-2 text-canvas transition-colors duration-500 hover:text-terra rounded-sm backdrop-blur-3xl">
+                  An Analytical Approach to Digital Craft
                 </h2>
               </div>
 
               {/* Scrollable paragraph carousel */}
-              <div className="flex flex-col gap-12 lg:pt-4">
+              <div className="flex flex-col gap-4 lg:pt-2">
                 <p
-                  className="about-para text-canvas/70 leading-relaxed transition-transform duration-100"
+                  className="about-para text-canvas leading-relaxed transition-transform duration-250"
                   style={{ fontSize: "var(--text-body)" }}
                 >
-                  I design interfaces with the discipline of print and the pace
-                  of cinema. Every grid, margin, and typographic decision is
-                  tuned to make space for the story.
+                  I am Muhammad Arslan. An Artificial Intelligence engineer and full-stack developer. I architect Ai system solutions with the rigorous discipline of data science and the fluid pace of modern web engineering.
                 </p>
                 <p
-                  className="about-para text-canvas/70 leading-relaxed transition-transform duration-100"
+                  className="about-para text-canvas leading-relaxed transition-transform duration-250"
                   style={{ fontSize: "var(--text-body)" }}
                 >
-                  The work lives in contrast—soft textures against sharp
-                  structure, quiet moments against bold statements—always
-                  calibrated for elegance and clarity.
+                  My work lives at the intersection of logic and aesthetic. Complex machine learning models and robust ETL pipelines running silently beneath high-end, Next.js interfaces. From engineering RAG-based networks that minimize hallucinations, to building secure platforms for fintech startups, every system is tuned for absolute clarity.
                 </p>
                 <p
-                  className="about-para text-canvas/70 leading-relaxed transition-transform duration-100"
+                  className="about-para text-canvas leading-relaxed transition-transform duration-250"
                   style={{ fontSize: "var(--text-body)" }}
                 >
-                  This is a practice built on restraint, intent, and the belief
-                  that atmosphere is a product feature.
-                </p>
-                <p
-                  className="about-para text-canvas/70 leading-relaxed transition-transform duration-100"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  Every project begins with understanding the narrative—the
-                  emotional arc, the pacing, the visual grammar that turns a
-                  functional interface into something you remember.
-                </p>
-                <p
-                  className="about-para text-canvas/70 leading-relaxed transition-transform duration-100"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  The tools change, the frameworks evolve, but the craft stays
-                  constant: obsessive attention to whitespace, typographic
-                  rhythm, and the weight of every visual decision.
-                </p>
-                <p
-                  className="about-para text-canvas/70 leading-relaxed transition-transform duration-100"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  From cinematic scroll experiences to refined editorial
-                  layouts, each piece is designed to feel like opening a
-                  beautifully bound book—deliberate, immersive, and worth
-                  lingering on.
-                </p>
-                <p
-                  className="about-para text-canvas/70 leading-relaxed transition-transform duration-100"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  I believe the best digital work carries the same
-                  intentionality as the best physical design—where nothing
-                  exists by accident, and every detail earns its place on the
-                  page.
-                </p>
-                <p
-                  className="about-para text-canvas/70 leading-relaxed transition-transform duration-100"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  Collaboration is essential to this process. The best outcomes
-                  emerge when ambition meets restraint, when bold creative
-                  vision is tempered by thoughtful technical execution.
+                  This is a practice built on mathematical restraint, intentional design, and the belief that true intelligence elegantly hides its own complexity.
                 </p>
               </div>
             </div>

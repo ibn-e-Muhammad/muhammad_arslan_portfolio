@@ -16,6 +16,8 @@ type Project = {
   category: string;
   year: string;
   image_url: string | null;
+  link: string | null;
+  description: string | null;
 };
 
 export default function Projects({ projects }: { projects: Project[] }) {
@@ -90,7 +92,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
               className="hero-title font-serif text-terra"
               style={{ fontSize: "var(--text-h2)" }}
             >
-              Selected Works
+              My Works
             </h2>
           </div>
 
@@ -119,16 +121,52 @@ export default function Projects({ projects }: { projects: Project[] }) {
                     )}
                   </div>
 
-                  {/* Project info — stacks on mobile, row on desktop */}
-                  <div className="project-info flex flex-col gap-3 pt-2 pb-8 md:gap-4 md:pb-10 md:flex-row md:items-end md:justify-between border-b border-ink/10">
-                    <h3 className="font-serif text-4xl md:text-5xl lg:text-7xl leading-tight">
-                      {project.title}
-                    </h3>
-                    <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs uppercase tracking-widest text-ink/60">
-                      <span className="font-sans">{project.category}</span>
-                      <span className="font-sans text-ink/30">—</span>
-                      <span className="font-sans">{project.year}</span>
+                  {/* Project info */}
+                  <div className="project-info flex flex-col gap-3 pt-2 pb-8 md:gap-4 md:pb-10 border-b border-ink/10">
+                    {/* Title + Meta row */}
+                    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                      <h3 className="font-serif text-4xl md:text-5xl lg:text-7xl leading-tight">
+                        {project.title}
+                      </h3>
+                      <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs uppercase tracking-widest text-ink/60">
+                        <span className="font-sans">{project.category}</span>
+                        <span className="font-sans text-ink/30">—</span>
+                        <span className="font-sans">{project.year}</span>
+                      </div>
                     </div>
+
+                    {/* Description */}
+                    {project.description && (
+                      <p className="max-w-2xl text-sm md:text-base leading-relaxed text-ink/60 font-sans">
+                        {project.description}
+                      </p>
+                    )}
+
+                    {/* Live link */}
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2 text-xs md:text-sm uppercase tracking-widest font-sans text-terra transition-colors hover:text-terra/70"
+                      >
+                        <span>See Live Project</span>
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        >
+                          <line x1="7" y1="17" x2="17" y2="7" />
+                          <polyline points="7 7 17 7 17 17" />
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 </article>
               ))

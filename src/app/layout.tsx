@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import Grain from "../components/layout/Grain";
 import Preloader from "../components/layout/Preloader";
 import SmoothScroll from "../components/layout/SmoothScroll";
 
 import "../styles/globals.css";
 
-const serif = Playfair_Display({
+const serif = Cormorant_Garamond({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap",
 });

@@ -3,13 +3,13 @@
 
 @layer base {
   :root {
-    --text-hero: clamp(4rem, 10vw, 9rem);
+    --text-hero: clamp(3.5rem, 9vw, 8.5rem);
     --text-h2: clamp(2.5rem, 5vw, 5rem);
     --text-body: clamp(0.875rem, 1.2vw, 1.125rem);
   }
 
   body {
-    @apply font-sans;
+    @apply font-sans leading-relaxed;
     font-size: var(--text-body);
   }
 
@@ -19,7 +19,9 @@
   h4,
   h5,
   h6 {
-    @apply font-serif tracking-tighter;
+    font-family: var(--font-serif);
+    @apply tracking-tighter;
+    line-height: 1.02;
   }
 
   h1 {

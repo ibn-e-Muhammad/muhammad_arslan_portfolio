@@ -26,25 +26,45 @@ export default function Contact() {
     return () => clearInterval(id);
   }, []);
 
-  /* ── Magnetic hover ──────────────────────────── */
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      if (!textRef.current) return;
-      const rect = textRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const offsetX = (e.clientX - centerX) * 0.08;
-      const offsetY = (e.clientY - centerY) * 0.08;
-
-      gsap.to(textRef.current, {
-        x: Math.max(-25, Math.min(25, offsetX)),
-        y: Math.max(-25, Math.min(25, offsetY)),
-        duration: 1,
-        ease: "power3.out",
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      /* ── Dynamic Jellyfish motion for Orbs ─────────── */
+      gsap.utils.toArray<HTMLElement>(".glow-orb").forEach((orb, i) => {
+        gsap.to(orb, {
+          x: () => gsap.utils.random(-400, 400),
+          y: () => gsap.utils.random(-400, 400),
+          scaleX: () => gsap.utils.random(0.6, 1.5),
+          scaleY: () => gsap.utils.random(0.6, 1.5),
+          rotation: () => gsap.utils.random(-90, 90),
+          duration: () => gsap.utils.random(2, 6),
+          ease: "sine.inOut",
+          repeat: -1,
+          repeatRefresh: true,
+          yoyo: true,
+          delay: i * 0.5,
+        });
       });
-    },
-    [],
-  );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  /* ── Magnetic hover ──────────────────────────── */
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    if (!textRef.current) return;
+    const rect = textRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const offsetX = (e.clientX - centerX) * 0.08;
+    const offsetY = (e.clientY - centerY) * 0.08;
+
+    gsap.to(textRef.current, {
+      x: Math.max(-25, Math.min(25, offsetX)),
+      y: Math.max(-25, Math.min(25, offsetY)),
+      duration: 1,
+      ease: "power3.out",
+    });
+  }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (!textRef.current) return;
@@ -64,6 +84,13 @@ export default function Contact() {
         onMouseLeave={handleMouseLeave}
         className="relative min-h-screen bg-void text-canvas flex flex-col justify-between px-8 py-12 md:px-16 md:py-16 lg:px-28 lg:py-24 overflow-hidden"
       >
+        {/* ── Blurred ambient orbs — liquid haze background ── */}
+        <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
+          <div className="glow-orb absolute top-1/4 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9] blur-[40px]" />
+          <div className="glow-orb absolute top-1/2 right-1/4 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33] blur-[60px]" />
+          <div className="glow-orb absolute top-1/4 right-1/4 h-[30vw] w-[30vw] rounded-full bg-void blur-[80px]" />
+        </div>
+
         {/* ── Ambient glow ────────────────────────── */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 left-1/3 h-[40vw] w-[40vw] rounded-full bg-terra/[0.05] blur-[140px]" />
@@ -135,10 +162,7 @@ export default function Contact() {
       </section>
 
       {/* ── Contact Modal ──────────────────────── */}
-      <ContactModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
+      <ContactModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }

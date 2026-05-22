@@ -8,7 +8,7 @@ export default async function Home() {
   /* ── Fetch projects from Supabase ────────────── */
   const { data: projects } = await supabaseAdmin
     .from("projects")
-    .select("id, title, category, year, image_url")
+    .select("id, title, category, year, image_url, link, description")
     .order("created_at", { ascending: true });
 
   return (

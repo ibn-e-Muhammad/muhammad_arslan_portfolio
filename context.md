@@ -292,3 +292,33 @@
     - This bypasses RLS on the server during the data fetch, allowing projects and messages to successfully render on both the public portfolio and the admin dashboard without needing to weaken the database's public read policies.
 
   Files: src/lib/supabase.ts, src/app/actions/contact.ts, src/app/admin/actions.ts, src/app/admin/page.tsx, src/app/page.tsx
+
+- Date: 2026-05-22
+  Instruction: Phase 5.2 — Admin Panel Overhaul + Project Link/Description.
+
+  Action (SQL Migration):
+    - Added `link TEXT DEFAULT NULL` and `description TEXT DEFAULT NULL` columns to the `projects` table.
+    - Added `read BOOLEAN DEFAULT FALSE` column to the `messages` table for read/unread tracking.
+
+  Action (Admin Panel — Messages):
+    - Replaced cramped table layout with card-based inbox UI.
+    - Each message now shows full body text (no truncation), sender avatar circle, name, clickable email, date+time, and a "New" badge for unread messages.
+    - Added "Mark read/unread" toggle via `toggleMessageRead` server action.
+    - Added "Reply" button that opens a mailto link pre-filled with subject line and original message quote.
+
+  Action (Admin Panel — Projects):
+    - Replaced table layout with responsive card grid showing image preview, title, category, year, description, and live link.
+    - Add Project form now includes fields for: Title, Category, Year, Live Link, Description, and Cover Image upload.
+    - `addProject` server action updated to insert `link` and `description` into the database.
+
+  Action (Admin Panel — Stats Bar):
+    - Added a 3-column stats bar at the top: Total Messages, Unread Messages (amber highlight), Total Projects.
+
+  Action (Site UI — Projects Section):
+    - Updated `Project` type to include `link` and `description`.
+    - Added project description paragraph below the title/meta row.
+    - Added "See Live Project ↗" link (styled in terra color) with hover animation, only visible when a link is provided.
+    - Updated `page.tsx` select query to include `link, description`.
+
+  Build Status: ✅ Compiled successfully.
+  Files: src/app/admin/actions.ts, src/app/admin/page.tsx, src/components/sections/Projects.tsx, src/app/page.tsx

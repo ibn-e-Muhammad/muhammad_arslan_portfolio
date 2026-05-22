@@ -10,6 +10,16 @@ export async function deleteMessage(id: string) {
   revalidatePath("/admin");
 }
 
+/* ── Toggle message read status ────────────────── */
+export async function toggleMessageRead(id: string, read: boolean) {
+  const { error } = await supabaseAdmin
+    .from("messages")
+    .update({ read })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin");
+}
+
 /* ── Delete a project ──────────────────────────── */
 export async function deleteProject(id: string) {
   // First, fetch the project to get the image_url
@@ -31,7 +41,7 @@ export async function deleteProject(id: string) {
   // Then delete the database row
   const { error } = await supabaseAdmin.from("projects").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  
+
   revalidatePath("/admin");
   revalidatePath("/");
 }
@@ -41,6 +51,8 @@ export async function addProject(formData: FormData) {
   const title = (formData.get("title") as string)?.trim();
   const category = (formData.get("category") as string)?.trim();
   const year = (formData.get("year") as string)?.trim();
+  const link = (formData.get("link") as string)?.trim() || null;
+  const description = (formData.get("description") as string)?.trim() || null;
   const imageFile = formData.get("image") as File | null;
 
   if (!title || !category || !year) {
@@ -65,16 +77,18 @@ export async function addProject(formData: FormData) {
       throw new Error(`Image upload failed: ${uploadError.message}`);
     }
 
-    const { data } = supabaseAdmin.storage.from("projects").getPublicUrl(fileName);
+    const { data } = supabaseAdmin.storage
+      .from("projects")
+      .getPublicUrl(fileName);
     image_url = data.publicUrl;
   }
 
   const { error } = await supabaseAdmin
     .from("projects")
-    .insert({ title, category, year, image_url });
+    .insert({ title, category, year, image_url, link, description });
 
   if (error) throw new Error(error.message);
-  
+
   revalidatePath("/admin");
   revalidatePath("/");
 }
