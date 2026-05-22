@@ -9,7 +9,7 @@
   }
 
   body {
-    @apply font-sans leading-relaxed;
+    @apply font-sans tracking-tight;
     font-size: var(--text-body);
   }
 
@@ -20,8 +20,8 @@
   h5,
   h6 {
     font-family: var(--font-serif);
-    @apply tracking-tighter;
-    line-height: 1.02;
+    @apply tracking-[-0.04em];
+    line-height: 0.9;
   }
 
   h1 {
@@ -31,4 +31,48 @@
   h2 {
     font-size: var(--text-h2);
   }
+
+  .label-wide {
+    @apply tracking-[0.25em] uppercase font-semibold text-xs;
+  }
+}
+
+/* Hide scrollbars while preserving scroll behavior */
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Prevent text selection and image dragging while keeping links clickable */
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+img,
+svg,
+video,
+canvas {
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+a,
+button,
+[role="button"],
+[data-clickable="true"] {
+  pointer-events: auto;
 }

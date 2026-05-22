@@ -92,9 +92,9 @@ export default function Hero() {
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
       {/* ── Blurred ambient orbs — liquid haze background ── */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="glow-orb absolute bottom-1/4 left-1/4 h-[50vw] w-[50vw] rounded-full bg-terra blur-[60px]" />
-        <div className="glow-orb absolute top-1/2 right-1/4 h-[40vw] w-[40vw] rounded-full bg-oatmeal blur-[80px]" />
-        <div className="glow-orb absolute top-1/4 left-1 h-[55vw] w-[55vw] rounded-full bg-[#8a3a33da] blur-[60px]" />
+        <div className="glow-orb absolute top-1/2 right-1/4 h-[50vw] w-[50vw] rounded-full bg-terra/[10] blur-[60px]" />
+        <div className="glow-orb absolute top-1/4 right-1/4 h-[40vw] w-[40vw] rounded-full bg-oatmeal blur-[80px]" />
+        <div className="glow-orb absolute bottom-1/2 left-1 h-[55vw] w-[55vw] rounded-full bg-[#8a3a33da] blur-[60px]" />
       </div>
 
       <Container className="relative flex min-h-screen items-center">
@@ -104,10 +104,15 @@ export default function Hero() {
             <p className="hero-tag text-xs md:text-sm uppercase tracking-[0.2em] text-ink/60">
               LOGICAL. SCALABLE. PRECISE.
             </p>
-            <h1 className="hero-title relative z-10 text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-serif leading-[1.02] tracking-tighter">
-              <span className="block text-terra">Full-Stack</span>
-              <span className="block">AI Engineer</span>
+            <h1 className="hero-title relative z-10 font-serif leading-[0.9] tracking-[-0.04em] uppercase" style={{ fontSize: "var(--text-hero)" }}>
+              <span className="block text-terra">MUHAMMAD</span>
+              <span className="block">ARSLAN</span>
             </h1>
+            <h2 className="hero-tag text-xs md:text-sm uppercase tracking-[0.2em] text-ink/60 mt-4">
+              Full-Stack
+              <br className="hidden md:block" />
+              AI Engineer
+            </h2>
             <p className="hero-body relative z-10 mt-2 max-w-xl font-sans text-base md:text-lg leading-relaxed tracking-normal text-ink/70">
               Architecting intelligent systems and high-end digital experiences. Bridging the gap between complex Ai systems that scale and elegant Web Architecture that Awe's every eye.
             </p>
@@ -115,10 +120,10 @@ export default function Hero() {
 
           {/* Right — Portrait with blurred hue shadow */}
           <div className="hero-image-wrapper order-1 flex justify-center md:order-2 md:justify-end">
-            <div className="hero-image relative w-[60%] md:w-[85%] max-w-md">
+            <div className="hero-image relative w-[80%] md:w-full max-w-lg lg:max-w-xl">
               {/* Blurred hue glow behind the portrait */}
-              <div className="absolute -inset-8 rounded-full bg-terra/30 blur-[60px]" />
-              <div className="absolute -inset-12 translate-x-4 translate-y-6 rounded-full bg-[#8A3A33]/20 blur-[80px]" />
+              <div className="absolute -inset-8 rounded-full bg-oatmeal/[30] blur-[120px]" />
+              <div className="absolute -inset-12 translate-x-4 translate-y-6 rounded-full bg-[#8A3A33]/[20] blur-[80px]" />
               {/* Actual portrait */}
               <div
                 className="relative aspect-[3/4] overflow-hidden rounded-sm"

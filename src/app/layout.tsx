@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Syne_Tactile, Montserrat } from "next/font/google";
 import Grain from "../components/layout/Grain";
 import Preloader from "../components/layout/Preloader";
 import SmoothScroll from "../components/layout/SmoothScroll";
 
 import "../styles/globals.css";
 
-const serif = Cormorant_Garamond({
+const serif = Syne_Tactile({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["400"], // Syne Tactile only supports weight 400
   variable: "--font-serif",
   display: "swap",
 });
 
-const sans = Inter({
+const sans = Montserrat({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
   variable: "--font-sans",
   display: "swap",
 });

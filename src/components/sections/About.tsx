@@ -137,30 +137,40 @@ export default function About() {
             <div className="flex flex-col gap-6">
               {/* Sticky heading — stays pinned alongside portrait */}
               <div className="lg:sticky lg:top-20 lg:z-10 lg:pb-8">
-                <h2 className="block about-heading font-serif lg:text-4xl leading-tight p-2 text-canvas transition-colors duration-500 hover:text-terra rounded-sm backdrop-blur-3xl">
-                  An Analytical Approach to Digital Craft
+                <h2 className="block about-heading font-serif text-4xl md:text-6xl uppercase leading-[0.95] tracking-tighter text-terra mb-12 rounded-sm backdrop-blur-3xl p-2 lg:p-0">
+                  INTELLIGENT BY DESIGN
                 </h2>
               </div>
 
               {/* Scrollable paragraph carousel */}
               <div className="flex flex-col gap-4 lg:pt-2">
-                <p
-                  className="about-para text-canvas leading-relaxed transition-transform duration-250"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  I am Muhammad Arslan. An Artificial Intelligence engineer and full-stack developer. I architect Ai system solutions with the rigorous discipline of data science and the fluid pace of modern web engineering.
+                <p className="about-para font-sans font-light text-sm md:text-base leading-relaxed mb-8 text-canvas transition-transform duration-250">
+                  I am Muhammad Arslan, an AI Engineer and Full-Stack Developer
+                  currently completing my degree in Artificial Intelligence at
+                  Mehran University of Engineering and Technology. I architect
+                  Ai system solutions with the rigorous discipline of data
+                  science and the fluid pace of modern web engineering.
                 </p>
-                <p
-                  className="about-para text-canvas leading-relaxed transition-transform duration-250"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  My work lives at the intersection of logic and aesthetic. Complex machine learning models and robust ETL pipelines running silently beneath high-end, Next.js interfaces. From engineering RAG-based networks that minimize hallucinations, to building secure platforms for fintech startups, every system is tuned for absolute clarity.
+                <p className="about-para font-sans font-light text-sm md:text-base leading-relaxed mb-8 text-canvas transition-transform duration-250">
+                  My practice focuses heavily on data optimization and system
+                  integration. My work lives at the intersection of logic and
+                  aesthetic. Whether designing ETL data pipelines that reduce
+                  redundancy, managing full-stack architectures as Web Master
+                  for AIC MUET, or engineering RAG-based AI agents with custom
+                  guardrails for bussinesses to reduce hallucination rates and
+                  actually be useful, I design backend systems to perform
+                  reliably under extreme conditions and scale efficiently.
                 </p>
-                <p
-                  className="about-para text-canvas leading-relaxed transition-transform duration-250"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  This is a practice built on mathematical restraint, intentional design, and the belief that true intelligence elegantly hides its own complexity.
+                <p className="about-para font-sans font-light text-sm md:text-base leading-relaxed mb-8 text-canvas transition-transform duration-250">
+                  From developing secure fintech platforms for clients to
+                  implementing live spatial Geolocation systems, I build
+                  software that values mathematical precision, performance
+                  security, and uncompromising design.
+                </p>
+                <p className="about-para font-sans font-light text-sm md:text-base leading-relaxed mb-8 text-canvas transition-transform duration-250">
+                  This is a practice built on mathematical restraint,
+                  intentional design, and the belief that true intelligence
+                  elegantly hides its own complexity.
                 </p>
               </div>
             </div>
