@@ -234,3 +234,61 @@
     - Removed `target="_blank"`, `rel="noopener noreferrer"`, and the manual `onClick` fallback from the Contact CTA link.
     - Opening a `mailto:` link in a new tab or via async JavaScript wrappers triggers Chrome's anti-popup restrictions ("user gesture is required"). Native `mailto:` links work flawlessly as long as they are plain `<a>` tags with no artificial redirection.
   Files: src/components/sections/Contact.tsx
+
+- Date: 2026-05-22
+  Instruction: Phase 5 — Full-Stack Transition (Supabase + Upstash + Admin).
+
+  Action (Step 1 — Dependencies):
+    - Installed @supabase/supabase-js, @upstash/redis, @upstash/ratelimit via npm.
+
+  Action (Step 2 — Utility Libraries):
+    - Created src/lib/supabase.ts — Supabase client using NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY.
+    - Created src/lib/ratelimit.ts — Upstash Redis + Ratelimit instance (3 requests/hour sliding window per IP).
+
+  Action (Step 3 — Contact Server Action):
+    - Created src/app/actions/contact.ts — "use server" action with useActionState-compatible signature (prevState, formData).
+    - Extracts IP from x-forwarded-for header, rate-limits via Upstash, inserts into Supabase `messages` table.
+    - Returns { success, message } for UI feedback.
+
+  Action (Step 4 — ContactModal + Contact):
+    - Recreated src/components/sections/ContactModal.tsx — fixed z-[200] overlay, backdrop blur, bg-void/90, ambient glow orbs.
+    - Uses React 19 useActionState wired to submitContact action. Loading spinner, success/error messages, auto-close on success.
+    - Updated src/components/sections/Contact.tsx — CTA is now <a> with onClick + e.preventDefault() to open modal. GSAP magnetic hover preserved.
+
+  Action (Step 5 — Proxy + Config):
+    - Created src/proxy.ts (NOT middleware.ts — deprecated in Next.js 16). Exported function `proxy()` with matcher `/admin/:path*`.
+    - Implements Basic Auth: checks `admin_session` cookie → validates against ADMIN_PASSWORD → sets httpOnly session cookie on success.
+    - Updated next.config.ts with images.remotePatterns allowing any HTTPS hostname for Supabase storage URLs.
+
+  Action (Step 6 — Admin Dashboard):
+    - Created src/app/admin/layout.tsx — bypasses cinematic Preloader/Grain/SmoothScroll, white background, standard scrolling, sticky header.
+    - Created src/app/admin/page.tsx — Server Component fetching messages and projects from Supabase. Two clean tables with Delete buttons.
+    - Inline Add Project form (Title, Category, Year, Image URL) at top of projects table.
+    - Created src/app/admin/actions.ts — server actions for deleteMessage, deleteProject, addProject. Each revalidates /admin and /.
+
+  Action (Step 7 — Dynamic Projects):
+    - Updated src/components/sections/Projects.tsx — accepts `projects` prop, renders Next.js Image when image_url available, falls back to oatmeal placeholder.
+    - Updated src/app/page.tsx — async Server Component fetches projects from Supabase ordered by created_at ASC, passes to <Projects />.
+
+  Build Status: ✅ Compiled successfully. Routes: / (static), /admin (dynamic), Proxy (active).
+  Files: src/lib/supabase.ts [NEW], src/lib/ratelimit.ts [NEW], src/app/actions/contact.ts [NEW], src/components/sections/ContactModal.tsx, src/components/sections/Contact.tsx, src/proxy.ts [NEW], next.config.ts, src/app/admin/layout.tsx [NEW], src/app/admin/page.tsx [NEW], src/app/admin/actions.ts [NEW], src/components/sections/Projects.tsx, src/app/page.tsx
+
+- Date: 2026-05-22
+  Instruction: Phase 5.1 — RLS Bypass and Admin Image Uploads.
+
+  Action (Step 1 — RLS Bypass via Service Role Key):
+    - Updated `src/lib/supabase.ts` to export `supabaseAdmin`, initialized with `SUPABASE_SERVICE_ROLE_KEY`.
+    - Modified `src/app/actions/contact.ts` to use `supabaseAdmin` for inserting messages, circumventing RLS restrictions securely on the server.
+    - Modified `src/app/admin/actions.ts` to use `supabaseAdmin` for all CRUD operations on projects and messages.
+
+  Action (Step 2 — Admin File Uploads):
+    - Updated `src/app/admin/page.tsx` to replace the `image_url` text input with an `<input type="file" accept="image/*" />`.
+    - Refactored `addProject` in `src/app/admin/actions.ts` to handle the `File` object from `FormData`.
+    - Implemented logic to upload the image file to the Supabase `projects` storage bucket and generate a public URL.
+    - Added logic to `deleteProject` in `src/app/admin/actions.ts` to automatically remove the associated image from the Supabase bucket when the project is deleted.
+
+  Action (Step 3 — Read/Fetch RLS Bypass):
+    - Updated `src/app/page.tsx` and `src/app/admin/page.tsx` to use `supabaseAdmin` instead of `supabase`.
+    - This bypasses RLS on the server during the data fetch, allowing projects and messages to successfully render on both the public portfolio and the admin dashboard without needing to weaken the database's public read policies.
+
+  Files: src/lib/supabase.ts, src/app/actions/contact.ts, src/app/admin/actions.ts, src/app/admin/page.tsx, src/app/page.tsx

@@ -2,10 +2,12 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 import gsap from "gsap";
+import ContactModal from "./ContactModal";
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const textRef = useRef<HTMLAnchorElement | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const [localTime, setLocalTime] = useState("");
 
   /* ── Live clock ──────────────────────────────── */
@@ -24,7 +26,7 @@ export default function Contact() {
     return () => clearInterval(id);
   }, []);
 
-  /* ── Magnetic hover on H2 ────────────────────── */
+  /* ── Magnetic hover ──────────────────────────── */
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       if (!textRef.current) return;
@@ -79,7 +81,11 @@ export default function Contact() {
         <div className="relative z-10">
           <a
             ref={textRef}
-            href="mailto:muhammadarslan23156@gmail.com"
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              setModalOpen(true);
+            }}
             className="block cursor-pointer font-serif text-5xl md:text-7xl lg:text-9xl leading-[0.95] transition-colors duration-500 hover:text-terra"
           >
             <span className="block">Let&apos;s build</span>
@@ -128,6 +134,11 @@ export default function Contact() {
         </div>
       </section>
 
+      {/* ── Contact Modal ──────────────────────── */}
+      <ContactModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </>
   );
 }

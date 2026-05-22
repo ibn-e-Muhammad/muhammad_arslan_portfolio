@@ -10,28 +10,15 @@ import projectsBg from "../../assets/images/background_projects.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
-  {
-    id: "arcadia",
-    title: "Arcadia",
-    category: "Digital Experience",
-    year: "2024",
-  },
-  {
-    id: "lumina",
-    title: "Lumina",
-    category: "Brand System",
-    year: "2023",
-  },
-  {
-    id: "nocturne",
-    title: "Nocturne",
-    category: "Interactive Story",
-    year: "2022",
-  },
-];
+type Project = {
+  id: string;
+  title: string;
+  category: string;
+  year: string;
+  image_url: string | null;
+};
 
-export default function Projects() {
+export default function Projects({ projects }: { projects: Project[] }) {
   const containerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -109,29 +96,47 @@ export default function Projects() {
 
           {/* Project entries */}
           <div className="flex flex-col">
-            {projects.map((project) => (
-              <article
-                key={project.id}
-                className="relative mb-20 md:mb-40 flex min-h-[50vh] md:min-h-[80vh] flex-col justify-center"
-              >
-                {/* Cinematic project poster — oatmeal placeholder with parallax */}
-                <div className="project-media mb-4 w-full aspect-[4/3] md:aspect-[21/9] bg-oatmeal relative overflow-hidden rounded-sm">
-                  <div className="project-img h-[180%] w-full bg-oatmeal" />
-                </div>
-
-                {/* Project info — stacks on mobile, row on desktop */}
-                <div className="project-info flex flex-col gap-3 pt-2 pb-8 md:gap-4 md:pb-10 md:flex-row md:items-end md:justify-between border-b border-ink/10">
-                  <h3 className="font-serif text-4xl md:text-5xl lg:text-7xl leading-tight">
-                    {project.title}
-                  </h3>
-                  <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs uppercase tracking-widest text-ink/60">
-                    <span className="font-sans">{project.category}</span>
-                    <span className="font-sans text-ink/30">—</span>
-                    <span className="font-sans">{project.year}</span>
+            {projects.length > 0 ? (
+              projects.map((project) => (
+                <article
+                  key={project.id}
+                  className="relative mb-20 md:mb-40 flex min-h-[50vh] md:min-h-[80vh] flex-col justify-center"
+                >
+                  {/* Cinematic project poster with parallax */}
+                  <div className="project-media mb-4 w-full aspect-[4/3] md:aspect-[21/9] bg-oatmeal relative overflow-hidden rounded-sm">
+                    {project.image_url ? (
+                      <div className="project-img h-[180%] w-full relative">
+                        <Image
+                          src={project.image_url}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                          sizes="100vw"
+                        />
+                      </div>
+                    ) : (
+                      <div className="project-img h-[180%] w-full bg-oatmeal" />
+                    )}
                   </div>
-                </div>
-              </article>
-            ))}
+
+                  {/* Project info — stacks on mobile, row on desktop */}
+                  <div className="project-info flex flex-col gap-3 pt-2 pb-8 md:gap-4 md:pb-10 md:flex-row md:items-end md:justify-between border-b border-ink/10">
+                    <h3 className="font-serif text-4xl md:text-5xl lg:text-7xl leading-tight">
+                      {project.title}
+                    </h3>
+                    <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs uppercase tracking-widest text-ink/60">
+                      <span className="font-sans">{project.category}</span>
+                      <span className="font-sans text-ink/30">—</span>
+                      <span className="font-sans">{project.year}</span>
+                    </div>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <p className="text-center text-ink/40 py-20 font-sans">
+                Projects coming soon.
+              </p>
+            )}
           </div>
         </div>
       </Container>
