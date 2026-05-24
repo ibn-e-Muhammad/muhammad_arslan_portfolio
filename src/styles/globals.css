@@ -37,6 +37,53 @@
   }
 }
 
+/* ── CTA Button text-swap animation ── */
+.cta-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn-text-wrapper {
+  position: relative;
+  display: block;
+  height: 20px; /* match line height */
+  overflow: hidden;
+}
+
+.cta-text {
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.cta-text-secondary {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+.cta-btn:hover .cta-text-primary {
+  transform: translateY(-100%);
+}
+
+.cta-btn:hover .cta-text-secondary {
+  transform: translateY(-100%);
+}
+
+/* ── Status Dot Flicker ── */
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+.animate-flicker {
+  animation: flicker 1.5s infinite;
+}
+
 /* Hide scrollbars while preserving scroll behavior */
 html,
 body {

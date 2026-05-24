@@ -72,7 +72,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
   }, []);
 
   return (
-    <Section ref={containerRef} className="relative overflow-hidden">
+    <Section ref={containerRef} className="relative overflow-hidden" data-section="projects">
       {/* ── Section background image ──────────────────── */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <Image
@@ -88,12 +88,11 @@ export default function Projects({ projects }: { projects: Project[] }) {
         <div className="flex flex-col gap-section-gap">
           {/* Section heading */}
           <div className="text-center">
-            <h2
-              className="hero-title font-serif text-terra"
-              style={{ fontSize: "var(--text-h2)" }}
+            <h1
+              className="hero-title font-serif text-terra font-black leading-[0.95] tracking-[-0.2rem] text-[3.5rem] md:text-7xl lg:text-[5.5rem]"
             >
               My Works
-            </h2>
+            </h1>
           </div>
 
           {/* Project entries */}

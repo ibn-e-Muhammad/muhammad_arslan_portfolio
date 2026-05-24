@@ -82,6 +82,7 @@ export default function Contact() {
         ref={sectionRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        data-section="contact"
         className="relative min-h-screen bg-void text-canvas flex flex-col justify-between px-8 py-12 md:px-16 md:py-16 lg:px-28 lg:py-24 overflow-hidden"
       >
         {/* ── Blurred ambient orbs — liquid haze background ── */}
