@@ -45,6 +45,9 @@ export default function RootLayout({
         <Preloader />
         <Grain />
         <Navbar />
+        <div className="fixed bottom-6 left-6 z-50 max-w-[22rem] rounded-full border border-ink/15 bg-canvas/80 px-4 py-2 text-[0.7rem] uppercase tracking-[0.22em] text-ink/70 shadow-lg backdrop-blur">
+          Portfolio in progress — projects coming soon. Contact links work.
+        </div>
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
