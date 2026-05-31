@@ -41,7 +41,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${serif.variable} ${sans.variable} ${mono.variable} font-sans font-medium bg-canvas text-ink antialiased`}>
+      <body
+        className={`${serif.variable} ${sans.variable} ${mono.variable} font-sans font-medium bg-canvas text-ink antialiased`}
+      >
         <Preloader />
         <Grain />
         <Navbar />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import gsap from "gsap";
+import { motion, useSpring } from "framer-motion";
 import ContactModal from "./ContactModal";
 
 export default function Contact() {
@@ -26,30 +26,10 @@ export default function Contact() {
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      /* ── Dynamic Jellyfish motion for Orbs ─────────── */
-      gsap.utils.toArray<HTMLElement>(".glow-orb").forEach((orb, i) => {
-        gsap.to(orb, {
-          x: () => gsap.utils.random(-400, 400),
-          y: () => gsap.utils.random(-400, 400),
-          scaleX: () => gsap.utils.random(0.6, 1.5),
-          scaleY: () => gsap.utils.random(0.6, 1.5),
-          rotation: () => gsap.utils.random(-90, 90),
-          duration: () => gsap.utils.random(2, 6),
-          ease: "sine.inOut",
-          repeat: -1,
-          repeatRefresh: true,
-          yoyo: true,
-          delay: i * 0.5,
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   /* ── Magnetic hover ──────────────────────────── */
+  const x = useSpring(0, { stiffness: 150, damping: 15, mass: 0.1 });
+  const y = useSpring(0, { stiffness: 150, damping: 15, mass: 0.1 });
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
     if (!textRef.current) return;
     const rect = textRef.current.getBoundingClientRect();
@@ -58,28 +38,18 @@ export default function Contact() {
     const offsetX = (e.clientX - centerX) * 0.08;
     const offsetY = (e.clientY - centerY) * 0.08;
 
-    gsap.to(textRef.current, {
-      x: Math.max(-25, Math.min(25, offsetX)),
-      y: Math.max(-25, Math.min(25, offsetY)),
-      duration: 1,
-      ease: "power3.out",
-    });
-  }, []);
+    x.set(Math.max(-25, Math.min(25, offsetX)));
+    y.set(Math.max(-25, Math.min(25, offsetY)));
+  }, [x, y]);
 
   const handleMouseLeave = useCallback(() => {
-    if (!textRef.current) return;
-    gsap.to(textRef.current, {
-      x: 0,
-      y: 0,
-      duration: 1.2,
-      ease: "elastic.out(1, 0.3)",
-    });
-  }, []);
+    x.set(0);
+    y.set(0);
+  }, [x, y]);
 
   return (
     <>
       <section
-        ref={sectionRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         data-section="contact"
@@ -87,9 +57,21 @@ export default function Contact() {
       >
         {/* ── Blurred ambient orbs — liquid haze background ── */}
         <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
-          <div className="glow-orb absolute top-1/4 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9] blur-[40px]" />
-          <div className="glow-orb absolute top-1/2 right-1/4 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33] blur-[60px]" />
-          <div className="glow-orb absolute top-1/4 right-1/4 h-[30vw] w-[30vw] rounded-full bg-void blur-[80px]" />
+          <motion.div 
+            animate={{ x: ["-10%", "20%", "-20%", "10%", "-10%"], y: ["-10%", "20%", "0%", "-20%", "-10%"], scale: [1, 1.2, 0.9, 1.1, 1] }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="glow-orb absolute top-1/4 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9] blur-[40px]" 
+          />
+          <motion.div 
+            animate={{ x: ["20%", "-10%", "20%", "-20%", "20%"], y: ["20%", "-20%", "10%", "-10%", "20%"], scale: [1, 1.1, 0.8, 1.2, 1] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+            className="glow-orb absolute top-1/2 right-1/4 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33] blur-[60px]" 
+          />
+          <motion.div 
+            animate={{ x: ["-20%", "30%", "-10%", "20%", "-20%"], y: ["-20%", "30%", "-10%", "20%", "-20%"], scale: [1, 1.3, 0.9, 1.1, 1] }}
+            transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+            className="glow-orb absolute top-1/4 right-1/4 h-[30vw] w-[30vw] rounded-full bg-void blur-[80px]" 
+          />
         </div>
 
         {/* ── Ambient glow ────────────────────────── */}
@@ -107,7 +89,8 @@ export default function Contact() {
 
         {/* Central statement — magnetic */}
         <div className="relative z-10">
-          <a
+          <motion.a
+            style={{ x, y }}
             ref={textRef}
             href="#contact"
             onClick={(e) => {
@@ -118,7 +101,7 @@ export default function Contact() {
           >
             <span className="block">Let&apos;s build</span>
             <span className="block">something timeless.</span>
-          </a>
+          </motion.a>
         </div>
 
         {/* Footer info */}

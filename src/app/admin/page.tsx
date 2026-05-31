@@ -1,10 +1,11 @@
 import { supabaseAdmin } from "@/lib/supabase";
+import type { Project } from "@/lib/types";
 import {
   deleteMessage,
   deleteProject,
-  addProject,
   toggleMessageRead,
 } from "./actions";
+import ProjectForm from "./ProjectForm";
 
 export const dynamic = "force-dynamic";
 
@@ -17,13 +18,15 @@ export default async function AdminPage() {
 
   const { data: projects } = await supabaseAdmin
     .from("projects")
-    .select("*")
+    .select("id, title, tagline, logo_url, category, year, image_url, link, description, tech_stack, platforms, highlights, case_study_description, case_study_features, case_study_label, created_at")
     .order("created_at", { ascending: true });
+
+  const typedProjects = (projects ?? []) as Project[];
 
   const unreadCount =
     messages?.filter((m) => !m.read).length ?? 0;
   const totalMessages = messages?.length ?? 0;
-  const totalProjects = projects?.length ?? 0;
+  const totalProjects = typedProjects.length;
 
   return (
     <div className="flex flex-col gap-10">
@@ -177,100 +180,14 @@ export default async function AdminPage() {
         </h2>
 
         {/* ── Add project form ─────────────────────── */}
-        <form
-          action={async (formData) => {
-            "use server";
-            await addProject(formData);
-          }}
-          className="mb-8 rounded-xl border border-gray-200 bg-gray-50/80 p-6"
-        >
-          <h3 className="mb-4 text-sm font-semibold text-gray-700">
-            Add New Project
-          </h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-500">
-                Title *
-              </label>
-              <input
-                name="title"
-                required
-                placeholder="Project name"
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition-colors focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-500">
-                Category *
-              </label>
-              <input
-                name="category"
-                required
-                placeholder="e.g. Brand System"
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition-colors focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-500">
-                Year *
-              </label>
-              <input
-                name="year"
-                required
-                placeholder="2024"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition-colors focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-500">
-                Live Link
-              </label>
-              <input
-                name="link"
-                type="url"
-                placeholder="https://project-url.com"
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition-colors focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
-              />
-            </div>
-          </div>
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-500">
-                Description
-              </label>
-              <textarea
-                name="description"
-                rows={3}
-                placeholder="Brief description of the project..."
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition-colors resize-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-500">
-                Cover Image
-              </label>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-500 file:mr-4 file:rounded-full file:border-0 file:bg-gray-100 file:px-4 file:py-1 file:text-xs file:font-medium file:text-gray-700 hover:file:bg-gray-200 outline-none focus:border-gray-500"
-              />
-            </div>
-          </div>
-          <div className="mt-4 flex justify-end">
-            <button
-              type="submit"
-              className="rounded-lg bg-gray-900 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-700"
-            >
-              Add Project
-            </button>
-          </div>
-        </form>
+        <div className="mb-8">
+          <ProjectForm />
+        </div>
 
-        {/* ── Projects list (card layout) ──────────── */}
+        {/* ── Projects list (expanded card layout) ─── */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {projects && projects.length > 0 ? (
-            projects.map((project) => (
+          {typedProjects.length > 0 ? (
+            typedProjects.map((project) => (
               <div
                 key={project.id}
                 className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm"
@@ -287,12 +204,31 @@ export default async function AdminPage() {
                   </div>
                 )}
                 <div className="p-5">
+                  {/* Title + Logo + Delete */}
                   <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h4 className="font-semibold">{project.title}</h4>
-                      <p className="mt-0.5 text-xs text-gray-400">
-                        {project.category} · {project.year}
-                      </p>
+                    <div className="flex items-center gap-3">
+                      {/* Logo or initial */}
+                      {project.logo_url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={project.logo_url}
+                          alt=""
+                          className="h-10 w-10 rounded-lg object-cover bg-gray-100"
+                        />
+                      ) : (
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-sm font-bold text-gray-500">
+                          {project.title.charAt(0)}
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="font-semibold">{project.title}</h4>
+                        <p className="mt-0.5 text-xs text-gray-400">
+                          {project.category} · {project.year}
+                          {project.case_study_label && project.case_study_label !== "PROJECT" && (
+                            <> · {project.case_study_label}</>
+                          )}
+                        </p>
+                      </div>
                     </div>
                     <form
                       action={async () => {
@@ -308,11 +244,55 @@ export default async function AdminPage() {
                       </button>
                     </form>
                   </div>
+
+                  {/* Tagline */}
+                  {project.tagline && (
+                    <p className="mt-2 text-sm text-gray-500 italic">
+                      {project.tagline}
+                    </p>
+                  )}
+
+                  {/* Description */}
                   {project.description && (
                     <p className="mt-2 text-sm text-gray-600 line-clamp-2">
                       {project.description}
                     </p>
                   )}
+
+                  {/* Tech Stack */}
+                  {project.tech_stack && project.tech_stack.length > 0 && (
+                    <p className="mt-2 text-xs text-gray-400">
+                      {project.tech_stack.join(" · ")}
+                    </p>
+                  )}
+
+                  {/* Platform tags */}
+                  {project.platforms && project.platforms.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {project.platforms.map((p) => (
+                        <span
+                          key={p}
+                          className="rounded-full bg-teal-50 px-2 py-0.5 text-[10px] font-semibold uppercase text-teal-700 border border-teal-200"
+                        >
+                          {p}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Highlights */}
+                  {project.highlights && project.highlights.length > 0 && (
+                    <div className="mt-3 flex gap-4">
+                      {project.highlights.map((h, i) => (
+                        <div key={i} className="text-center">
+                          <p className="text-sm font-bold text-gray-700">{h.value}</p>
+                          <p className="text-[10px] text-gray-400 uppercase">{h.label}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Link */}
                   {project.link && (
                     <a
                       href={project.link}

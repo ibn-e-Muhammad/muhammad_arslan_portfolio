@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback, useActionState } from "react";
-import gsap from "gsap";
+import { motion, AnimatePresence } from "framer-motion";
 import { submitContact, type ContactState } from "@/app/actions/contact";
 
 interface ContactModalProps {
@@ -21,85 +21,46 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     initialState,
   );
 
-  /* ── Animate open ────────────────────────────── */
-  useEffect(() => {
-    if (!overlayRef.current || !panelRef.current) return;
-    if (isOpen) {
-      gsap.to(overlayRef.current, {
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-      gsap.fromTo(
-        panelRef.current,
-        { y: 60, opacity: 0, scale: 0.96 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          delay: 0.1,
-        },
-      );
-    }
-  }, [isOpen]);
-
   /* ── Auto-close on success ───────────────────── */
   useEffect(() => {
     if (state.success) {
       const timer = setTimeout(() => {
-        handleClose();
+        onClose();
       }, 2000);
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.success]);
-
-  /* ── Animate close ───────────────────────────── */
-  const handleClose = useCallback(() => {
-    if (!overlayRef.current || !panelRef.current) return;
-    gsap.to(panelRef.current, {
-      y: 40,
-      opacity: 0,
-      scale: 0.96,
-      duration: 0.35,
-      ease: "power3.in",
-    });
-    gsap.to(overlayRef.current, {
-      opacity: 0,
-      duration: 0.35,
-      delay: 0.1,
-      ease: "power2.in",
-      onComplete: onClose,
-    });
-  }, [onClose]);
-
-  if (!isOpen) return null;
+  }, [state.success, onClose]);
 
   return (
-    <div
-      ref={overlayRef}
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-void/90 backdrop-blur-sm"
-      style={{ opacity: 0 }}
-      onClick={(e) => {
-        if (e.target === overlayRef.current) handleClose();
-      }}
-    >
-      {/* ── Ambient glow ────────────────────────────── */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="glow-orb absolute top-1/3 left-1/3 h-[40vw] w-[40vw] rounded-full bg-terra/[0.06] blur-[120px]" />
-        <div className="glow-orb absolute bottom-1/4 right-1/4 h-[35vw] w-[35vw] rounded-full bg-[#8A3A33]/[0.04] blur-[100px]" />
-      </div>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-void/90 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35, ease: "easeInOut" }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onClose();
+          }}
+        >
+          {/* ── Ambient glow ────────────────────────────── */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="glow-orb absolute top-1/3 left-1/3 h-[40vw] w-[40vw] rounded-full bg-terra/[0.06] blur-[120px]" />
+            <div className="glow-orb absolute bottom-1/4 right-1/4 h-[35vw] w-[35vw] rounded-full bg-[#8A3A33]/[0.04] blur-[100px]" />
+          </div>
 
-      <div
-        ref={panelRef}
-        className="relative mx-4 w-full max-w-lg rounded-2xl border border-canvas/10 bg-void p-8 md:p-12"
-        style={{ opacity: 0 }}
-      >
-        {/* Close button */}
+          <motion.div
+            className="relative mx-4 w-full max-w-lg rounded-2xl border border-canvas/10 bg-void p-8 md:p-12"
+            initial={{ opacity: 0, y: 60, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 40, scale: 0.96 }}
+            transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1], delay: 0.1 }}
+          >
+            {/* Close button */}
         <button
-          onClick={handleClose}
+          onClick={onClose}
           className="absolute top-4 right-4 text-canvas/40 transition-colors hover:text-canvas"
           aria-label="Close"
         >
@@ -219,7 +180,9 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             )}
           </button>
         </form>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

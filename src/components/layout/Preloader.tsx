@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import gsap from "gsap";
+import { motion, AnimatePresence, useSpring, useMotionValueEvent } from "framer-motion";
 
 export default function Preloader() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -9,46 +9,21 @@ export default function Preloader() {
   const lineRef = useRef<HTMLDivElement | null>(null);
   const [done, setDone] = useState(false);
 
-  const animatedValue = useRef(0);
-  const tweenRef = useRef<gsap.core.Tween | null>(null);
+  const [isExiting, setIsExiting] = useState(false);
+  const progressSpring = useSpring(0, { stiffness: 50, damping: 15, mass: 1 });
 
   const animateToValue = useCallback((target: number) => {
-    if (tweenRef.current) tweenRef.current.kill();
-    const proxy = { value: animatedValue.current };
-    tweenRef.current = gsap.to(proxy, {
-      value: Math.min(target, 100),
-      duration: 0.6,
-      ease: "power2.out",
-      onUpdate: () => {
-        const rounded = Math.round(proxy.value);
-        animatedValue.current = proxy.value;
-        if (counterRef.current) counterRef.current.textContent = String(rounded);
-        if (lineRef.current) lineRef.current.style.width = `${proxy.value}%`;
-      },
-    });
-  }, []);
+    progressSpring.set(Math.min(target, 100));
+  }, [progressSpring]);
+
+  useMotionValueEvent(progressSpring, "change", (latest) => {
+    const rounded = Math.round(latest);
+    if (counterRef.current) counterRef.current.textContent = String(rounded);
+    if (lineRef.current) lineRef.current.style.width = `${latest}%`;
+  });
 
   const triggerExit = useCallback(() => {
-    const tl = gsap.timeline({
-      onComplete: () => setDone(true),
-    });
-
-    tl.to(".preloader-content", {
-      opacity: 0,
-      y: -30,
-      duration: 0.6,
-      ease: "power3.inOut",
-    });
-
-    tl.to(
-      wrapperRef.current,
-      {
-        yPercent: -100,
-        duration: 1.2,
-        ease: "power4.inOut",
-      },
-      "-=0.2",
-    );
+    setIsExiting(true);
   }, []);
 
   useEffect(() => {
@@ -141,44 +116,53 @@ export default function Preloader() {
   if (done) return null;
 
   return (
-    <div
-      ref={wrapperRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-canvas"
-    >
-      {/* ── Subtle ambient orb ── */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 h-[60vw] w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-terra/[0.06] blur-[120px]" />
-      </div>
+    <AnimatePresence onExitComplete={() => setDone(true)}>
+      {!isExiting && (
+        <motion.div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-canvas"
+          exit={{ y: "-100%" }}
+          transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+        >
+          {/* ── Subtle ambient orb ── */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 h-[60vw] w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-terra/[0.06] blur-[120px]" />
+          </div>
 
-      {/* ── Centered content ── */}
-      <div className="preloader-content relative flex flex-col items-center">
-        {/* Percentage */}
-        <div className="flex items-start" style={{ fontFamily: "var(--font-mono)" }}>
-          <span
-            ref={counterRef}
-            className="text-[8rem] md:text-[10rem] font-bold tracking-tight text-ink/80 leading-none"
+          {/* ── Centered content ── */}
+          <motion.div 
+            className="preloader-content relative flex flex-col items-center"
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            0
-          </span>
-          <span className="mt-6 text-3xl md:text-4xl font-bold text-ink/40">
-            %
-          </span>
-        </div>
+            {/* Percentage */}
+            <div className="flex items-start" style={{ fontFamily: "var(--font-mono)" }}>
+              <span
+                ref={counterRef}
+                className="text-[8rem] md:text-[10rem] font-bold tracking-tight text-ink/80 leading-none"
+              >
+                0
+              </span>
+              <span className="mt-6 text-3xl md:text-4xl font-bold text-ink/40">
+                %
+              </span>
+            </div>
 
-        {/* Progress line */}
-        <div className="mt-4 h-[1px] w-64 md:w-80 bg-ink/10">
-          <div
-            ref={lineRef}
-            className="h-full bg-ink transition-[width] duration-300 ease-out"
-            style={{ width: "0%" }}
-          />
-        </div>
+            {/* Progress line */}
+            <div className="mt-4 h-[1px] w-64 md:w-80 bg-ink/10">
+              <div
+                ref={lineRef}
+                className="h-full bg-ink"
+                style={{ width: "0%" }}
+              />
+            </div>
 
-        {/* Subtext */}
-        <p className="mt-6 text-[10px] md:text-xs uppercase tracking-[0.3em] font-sans text-ink/40 font-medium">
-          Crafting your experience
-        </p>
-      </div>
-    </div>
+            {/* Subtext */}
+            <p className="mt-6 text-[10px] md:text-xs uppercase tracking-[0.3em] font-sans text-ink/40 font-medium">
+              Crafting your experience
+            </p>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

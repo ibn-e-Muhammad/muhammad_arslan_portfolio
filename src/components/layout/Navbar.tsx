@@ -2,11 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 import heroPortrait from "../../assets/images/hero_profile_pic.png";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement | null>(null);
@@ -15,27 +12,24 @@ export default function Navbar() {
 
   const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    const trigger = ScrollTrigger.create({
-      start: "top top",
-      end: "99999",
-      onUpdate: (self) => {
-        if (window.scrollY < 100) {
-          setCompact(false);
-          return;
-        }
-        if (self.direction === 1) {
-          // scrolling down
-          setCompact(true);
-        } else if (self.direction === -1) {
-          // scrolling up
-          setCompact(false);
-        }
-      },
-    });
+  const { scrollY } = useScroll();
 
-    return () => trigger.kill();
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    
+    if (latest < 100) {
+      setCompact(false);
+      return;
+    }
+    
+    if (latest > previous) {
+      // scrolling down
+      setCompact(true);
+    } else if (latest < previous) {
+      // scrolling up
+      setCompact(false);
+    }
+  });
 
   const isCompact = compact && !isHovered;
 
