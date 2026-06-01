@@ -36,13 +36,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         />
       }
     >
-      <div 
-        className="relative w-full h-full p-6 md:p-8 flex flex-col rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,1),inset_0_-2px_4px_rgba(255,255,255,0.4)] transition-all duration-500 group-hover:shadow-[inset_0_1px_2px_rgba(0,0,0,1),inset_0_-2px_6px_rgba(0,0,0,0.6)]"
+      <div
+        className="relative w-full h-full p-6 md:p-8 flex flex-col rounded-2xl bg-white/70 shadow-[0_10px_30px_rgba(59,130,246,0.14),0_6px_24px_rgba(236,72,153,0.12),inset_0_1px_1px_rgba(30,41,59,0.18),inset_0_-2px_4px_rgba(30,41,59,0.12)] transition-all duration-500 group-hover:shadow-[0_18px_55px_rgba(56,189,248,0.38),0_12px_45px_rgba(168,85,247,0.32),0_8px_32px_rgba(244,114,182,0.28),inset_0_1px_2px_rgba(30,41,59,0.3),inset_0_-2px_6px_rgba(30,41,59,0.2)]"
         style={{ transform: "translateZ(0)", outline: "1px solid transparent" }}
       >
-        
         {/* Shine/glare overlay */}
-        <div className="absolute inset-0 rounded-2xl pointer-events-none bg-gradient-to-tr from-canvas/[0.65] via-canvas/[0.15] to-canvas/[0.75] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="absolute inset-0 rounded-2xl pointer-events-none bg-gradient-to-tr from-[#f8fbff] via-[#e6f4ff] to-[#fef0ff] opacity-20 transition-opacity duration-500 group-hover:opacity-90" />
 
         {/* ── Header: Logo + Title ──────────────────── */}
         <div className="relative z-10 flex items-start gap-4">
@@ -67,7 +66,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               {project.title}
             </h3>
             {project.tagline && (
-              <p className="font-sans text-sm text-ink/60 mt-1 line-clamp-2">
+              <p className="font-sans text-sm text-ink/55 mt-1 line-clamp-2">
                 {project.tagline}
               </p>
             )}
@@ -76,7 +75,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
         {/* ── Tech stack ────────────────────────────── */}
         {project.tech_stack && project.tech_stack.length > 0 && (
-          <p className="relative z-10 text-xs text-ink/50 font-sans mt-4 line-clamp-2">
+          <p className="relative z-10 text-xs text-ink/45 font-sans mt-4 line-clamp-2">
             {project.tech_stack.join(" \u2022 ")}
           </p>
         )}
@@ -87,7 +86,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             {project.platforms.map((platform) => (
               <span
                 key={platform}
-                className="rounded-full px-3 py-1 text-[10px] uppercase tracking-wider font-sans font-semibold border bg-terra/15 text-terra border-terra/25"
+                className="rounded-full px-3 py-1 text-[10px] uppercase tracking-wider font-sans font-semibold border bg-terra/10 text-terra border-terra/20"
               >
                 {platform}
               </span>
@@ -96,7 +95,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         )}
 
         {/* ── Divider ───────────────────────────────── */}
-        {hasHighlights && <div className="relative z-10 my-5 h-[1px] bg-ink/[0.08]" />}
+        {hasHighlights && (
+          <div className="relative z-10 my-5 h-[1px] bg-ink/[0.05]" />
+        )}
 
         {/* ── Highlights row ────────────────────────── */}
         {hasHighlights && (
@@ -106,7 +107,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 <p className="font-serif text-lg md:text-xl font-bold text-terra">
                   {highlight.value}
                 </p>
-                <p className="font-sans text-[10px] uppercase tracking-wider text-ink/40 mt-1">
+                <p className="font-sans text-[10px] uppercase tracking-wider text-ink/35 mt-1">
                   {highlight.label}
                 </p>
               </div>
@@ -126,7 +127,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 e.stopPropagation();
                 setIsFlipped(true);
               }}
-              className="pointer-events-auto flex-1 rounded-lg bg-terra px-4 py-2.5 text-sm font-sans font-semibold text-canvas text-center transition-all hover:bg-terra/90 hover:shadow-lg hover:shadow-terra/20"
+              className="pointer-events-auto flex-1 rounded-lg bg-terra/90 px-4 py-2.5 text-sm font-sans font-semibold text-canvas text-center transition-all hover:bg-terra/80 hover:shadow-lg hover:shadow-[0_10px_24px_rgba(56,189,248,0.25)]"
             >
               View Case Study
             </button>
@@ -138,7 +139,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="pointer-events-auto rounded-lg border border-ink/15 px-4 py-2.5 text-sm font-sans font-medium text-ink/80 text-center transition-all hover:bg-ink/5 hover:border-ink/25 flex items-center justify-center gap-1.5"
+              className="pointer-events-auto rounded-lg border border-ink/10 px-4 py-2.5 text-sm font-sans font-medium text-ink/80 text-center transition-all hover:bg-ink/3 hover:border-ink/20 hover:shadow-[0_8px_20px_rgba(168,85,247,0.18)] flex items-center justify-center gap-1.5"
             >
               Open
               <svg

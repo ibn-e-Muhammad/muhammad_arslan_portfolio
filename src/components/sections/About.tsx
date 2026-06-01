@@ -16,12 +16,12 @@ export default function About() {
         <motion.div 
           animate={{ x: ["-10%", "20%", "-20%", "10%", "-10%"], y: ["-10%", "20%", "0%", "-20%", "-10%"], scale: [1, 1.2, 0.9, 1.1, 1] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="glow-orb absolute top-1/2 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9]/[0.70] blur-[40px]" 
+          className="glow-orb absolute top-1/2 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9]/[0.40] blur-[40px]" 
         />
         <motion.div 
           animate={{ x: ["20%", "-10%", "20%", "-20%", "20%"], y: ["20%", "-20%", "10%", "-10%", "20%"], scale: [1, 1.1, 0.8, 1.2, 1] }}
           transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="glow-orb absolute top-1/4 right-1/2 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33]/[0.50] blur-[60px]" 
+          className="glow-orb absolute top-1/4 right-1/2 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33]/[0.35] blur-[60px]" 
         />
         
       </div>

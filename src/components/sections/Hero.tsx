@@ -64,39 +64,53 @@ export default function Hero({ projects = [] }: { projects?: Project[] }) {
 
   return (
     <section
-      className="relative min-h-screen overflow-hidden"
+      className="relative min-h-screen overflow-hidden bg-oatmeal"
       data-section="hero"
     >
       {/* ── Ambient orbs ── */}
       <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
-        <motion.div 
-          animate={{ x: ["-10%", "20%", "-20%", "10%", "-10%"], y: ["-10%", "20%", "0%", "-20%", "-10%"], scale: [1, 1.2, 0.9, 1.1, 1] }}
+        <motion.div
+          animate={{
+            x: ["-10%", "20%", "-20%", "10%", "-10%"],
+            y: ["-10%", "20%", "0%", "-20%", "-10%"],
+            scale: [1, 1.2, 0.9, 1.1, 1],
+          }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="glow-orb absolute top-1/2 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9]/[0.80] blur-[40px]" 
+          className="glow-orb absolute top-1/2 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9]/[0.80] blur-[40px]"
         />
-        <motion.div 
-          animate={{ x: ["20%", "-10%", "20%", "-20%", "20%"], y: ["20%", "-20%", "10%", "-10%", "20%"], scale: [1, 1.1, 0.8, 1.2, 1] }}
+        <motion.div
+          animate={{
+            x: ["20%", "-10%", "20%", "-20%", "20%"],
+            y: ["20%", "-20%", "10%", "-10%", "20%"],
+            scale: [1, 1.1, 0.8, 1.2, 1],
+          }}
           transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="glow-orb absolute top-1/4 right-1/2 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33]/[0.70] blur-[60px]" 
+          className="glow-orb absolute top-1/4 right-1/2 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33]/[0.70] blur-[60px]"
         />
-        <motion.div 
-          animate={{ x: ["-20%", "30%", "-10%", "20%", "-20%"], y: ["-20%", "30%", "-10%", "20%", "-20%"], scale: [1, 1.3, 0.9, 1.1, 1] }}
+        <motion.div
+          animate={{
+            x: ["-20%", "30%", "-10%", "20%", "-20%"],
+            y: ["-20%", "30%", "-10%", "20%", "-20%"],
+            scale: [1, 1.3, 0.9, 1.1, 1],
+          }}
           transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-          className="glow-orb absolute top-1/4 right-1/4 h-[35vw] w-[35vw] rounded-full bg-[#FFFDD0]/25 blur-[40px]" 
+          className="glow-orb absolute top-1/4 right-1/4 h-[35vw] w-[35vw] rounded-full bg-[#FFFDD0]/25 blur-[40px]"
         />
       </div>
 
       <Container className="relative flex min-h-[100svh] items-center pt-24 pb-8">
         <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* ── Left — Copy ── */}
-          <motion.div 
+          <motion.div
             style={{ y: yContent, opacity: opacityContent }}
             className="hero-content-wrapper order-2 flex flex-col gap-5 lg:order-1"
           >
             {/* Status badge */}
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
-              className="hero-badge flex items-center gap-2 w-fit rounded-full border border-ink/10 bg-canvas px-4 py-2"
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+              className="hero-badge flex items-center gap-2 w-fit rounded-full border border-ink/10 bg-oatmeal px-4 py-2"
             >
               <span className="h-3 w-3 rounded-full bg-[#10b962ff] animate-flicker" />
               <span className="font-sans text-base font-medium text-ink/90">
@@ -105,8 +119,10 @@ export default function Hero({ projects = [] }: { projects?: Project[] }) {
             </motion.div>
 
             {/* Main tagline */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.48, ease: "easeOut" }}
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.48, ease: "easeOut" }}
               className="hero-title font-serif font-semibold leading-[0.95] tracking-[-0.2rem] text-[3.5rem] md:text-7xl lg:text-[5.5rem]"
             >
               <span className="block text-ink">I enjoy engineering</span>
@@ -115,8 +131,10 @@ export default function Hero({ projects = [] }: { projects?: Project[] }) {
             </motion.h1>
 
             {/* Name + role */}
-            <motion.p 
-              initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.66, ease: "easeOut" }}
+            <motion.p
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.66, ease: "easeOut" }}
               className="hero-name pt-4 font-sans text-xs md:text-base text-ink/70"
             >
               I&apos;m Arslan, an AI Engineer building scalable, autonomous, and
@@ -127,7 +145,9 @@ export default function Hero({ projects = [] }: { projects?: Project[] }) {
 
             {/* CTA Button */}
             <motion.button
-              initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.84, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.84, ease: "easeOut" }}
               onClick={scrollToProjects}
               className="hero-cta cta-btn group mt-2 flex w-fit items-center gap-3 rounded-full bg-ink px-6 py-3.5 md:px-8 md:py-4 text-canvas transition-shadow hover:shadow-xl hover:shadow-ink/20"
             >
@@ -157,12 +177,12 @@ export default function Hero({ projects = [] }: { projects?: Project[] }) {
           </motion.div>
 
           {/* ── Right — Card Stack ── */}
-          <motion.div 
+          <motion.div
             style={{ y: yStack, opacity: opacityStack }}
             className="hero-stack-wrapper order-1 flex justify-center lg:order-2 lg:justify-end"
           >
             <div
-              className="relative h-[220px] w-[350px] md:h-[280px] md:w-[460px] lg:h-[320px] lg:w-[540px] mt-8 lg:mt-0"
+              className="relative h-[250px] w-[380px] md:h-[320px] md:w-[500px] lg:h-[380px] lg:w-[600px] mt-8 lg:mt-0"
               style={{ perspective: "1200px" }}
             >
               {cardsState.map((card, idx) => (
@@ -172,37 +192,56 @@ export default function Hero({ projects = [] }: { projects?: Project[] }) {
                   initial={false}
                   animate={{
                     zIndex: cardsState.length - idx,
-                    x: idx * 32,
-                    y: isMounted ? (idx * -20) : 80,
-                    scale: isMounted ? (1 - idx * 0.06) : 0.9,
-                    opacity: isMounted ? (1 - idx * 0.15) : 0,
+                    x: idx * 36,
+                    y: isMounted ? idx * -24 : 80,
+                    scale: isMounted ? 1 - idx * 0.05 : 0.9,
+                    opacity: isMounted ? 1 - idx * 0.12 : 0,
                   }}
-                  transition={{ 
-                    duration: isMounted ? 0.6 : 1.6, 
+                  transition={{
+                    duration: isMounted ? 0.6 : 1.6,
                     delay: isMounted ? 0 : 0.5 + idx * 0.12,
-                    ease: "easeOut" 
+                    ease: "easeOut",
                   }}
-                  className="hero-card absolute inset-0 rounded-2xl border border-ink/[0.06] shadow-2xl overflow-hidden"
+                  className="hero-card absolute inset-0 flex flex-col overflow-hidden rounded-2xl bg-void shadow-2xl ring-1 ring-ink/20"
                   style={{ transformStyle: "preserve-3d" }}
                 >
-                  {card.type === "project" ? (
-                    <Image
-                      src={card.image}
-                      alt={card.title}
-                      fill
-                      priority={true}
-                      className="object-cover"
-                      sizes="(max-width: 768px) 260px, 350px"
-                    />
-                  ) : (
-                    <div
-                      className={`h-full w-full bg-gradient-to-br ${card.gradient} flex items-end p-6`}
-                    >
-                      <span className="font-sans text-xs uppercase tracking-[0.2em] text-canvas/70 font-medium">
-                        {card.title}
-                      </span>
+                  {/* ── Laptop Top Bezel + Camera ── */}
+                  <div className="relative z-10 flex h-3.5 shrink-0 items-center justify-center w-full bg-void md:h-5">
+                    <div className="relative flex h-1 w-1 items-center justify-center rounded-full bg-canvas/20 md:h-1.5 md:w-1.5">
+                      <div className="absolute inset-0 rounded-full bg-blue-400/20 blur-[1px]" />
                     </div>
-                  )}
+                  </div>
+
+                  {/* ── Screen Content ── */}
+                  <div className="relative flex-1 w-full overflow-hidden bg-ink">
+                    {/* Inner screen shadow/glare for hardware realism */}
+                    <div className="pointer-events-none absolute inset-0 z-10 ring-1 ring-inset ring-canvas/5" />
+                    <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-white/0 via-white/[0.02] to-white/[0.08]" />
+
+                    {card.type === "project" ? (
+                      <Image
+                        src={card.image}
+                        alt={card.title}
+                        fill
+                        priority={true}
+                        className="object-cover object-top"
+                        sizes="(max-width: 768px) 380px, 600px"
+                      />
+                    ) : (
+                      <div
+                        className={`flex h-full w-full items-end bg-gradient-to-br ${card.gradient} p-6`}
+                      >
+                        <span className="font-sans text-xs font-medium uppercase tracking-[0.2em] text-canvas/70">
+                          {card.title}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* ── Laptop Bottom Chin ── */}
+                  <div className="relative z-10 flex h-4 shrink-0 items-center justify-center w-full border-t border-canvas/5 bg-void md:h-6">
+                    <div className="h-[2px] w-6 rounded-full bg-canvas/10 md:w-10 md:h-[3px]" />
+                  </div>
                 </motion.div>
               ))}
             </div>

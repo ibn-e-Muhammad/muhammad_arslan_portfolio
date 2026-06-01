@@ -1,5 +1,6 @@
 import About from "../components/sections/About";
 import Contact from "../components/sections/Contact";
+import FAQ from "../components/sections/FAQ";
 import Hero from "../components/sections/Hero";
 import Projects from "../components/sections/Projects";
 import { supabaseAdmin } from "@/lib/supabase";
@@ -19,6 +20,7 @@ export default async function Home() {
       <Hero projects={typedProjects} />
       <About />
       <Projects projects={typedProjects} />
+      <FAQ />
       <Contact />
     </main>
   );

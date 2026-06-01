@@ -10,12 +10,9 @@ import projectsBg from "../../assets/images/background_projects.png";
 import type { Project } from "@/lib/types";
 
 export default function Projects({ projects }: { projects: Project[] }) {
-
-
-
   return (
     <Section
-      className="relative overflow-hidden bg-[projectsBg]"
+      className="relative overflow-hidden bg-oatmeal/[0.8]"
       data-section="projects"
     >
       {/* ── Background image ──────────────────────── */}
@@ -24,29 +21,15 @@ export default function Projects({ projects }: { projects: Project[] }) {
           src={projectsBg}
           alt=""
           fill
-          className="object-cover opacity-[0.25]"
+          className="object-cover opacity-[0.18]"
           placeholder="blur"
-        />
-      </div>
-
-      {/* ── Ambient orbs ──────────────────────────── */}
-      <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
-        <motion.div 
-          animate={{ x: ["-10%", "20%", "-20%", "10%", "-10%"], y: ["-10%", "20%", "0%", "-20%", "-10%"], scale: [1, 1.2, 0.9, 1.1, 1] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="projects-orb absolute top-1/3 left-1/2 h-[45vw] w-[45vw] rounded-full bg-terra/[0.4] blur-[40px]" 
-        />
-        <motion.div 
-          animate={{ x: ["20%", "-10%", "20%", "-20%", "20%"], y: ["20%", "-20%", "10%", "-10%", "20%"], scale: [1, 1.1, 0.8, 1.2, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="projects-orb absolute bottom-1/4 right-1/3 h-[40vw] w-[40vw] rounded-full bg-[#8A3A33]/[0.4] blur-[80px]" 
         />
       </div>
 
       <Container>
         <div className="flex flex-col gap-12 md:gap-16">
           {/* ── Section heading ───────────────────── */}
-          <motion.div 
+          <motion.div
             initial={{ y: 60, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: false, margin: "-10%" }}
@@ -66,11 +49,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
           {projects.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
               {projects.map((project, idx) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  index={idx}
-                />
+                <ProjectCard key={project.id} project={project} index={idx} />
               ))}
             </div>
           ) : (
@@ -80,7 +59,6 @@ export default function Projects({ projects }: { projects: Project[] }) {
           )}
         </div>
       </Container>
-
     </Section>
   );
 }
