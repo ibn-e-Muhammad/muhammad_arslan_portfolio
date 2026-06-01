@@ -74,7 +74,7 @@ export default function FAQ() {
             scale: [1, 1.15, 0.95, 1.1, 1],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/4 left-1/3 h-[45vw] w-[45vw] rounded-full bg-terra/[0.04] blur-[140px]"
+          className="absolute top-1/4 left-1/3 h-[45vw] w-[45vw] rounded-full bg-terra/[0.8] blur-[140px]"
         />
         <motion.div
           animate={{
@@ -83,7 +83,7 @@ export default function FAQ() {
             scale: [1, 1.1, 0.85, 1.15, 1],
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-1/4 right-1/4 h-[50vw] w-[50vw] rounded-full bg-[#8A3A33]/[0.03] blur-[120px]"
+          className="absolute bottom-1/4 right-1/4 h-[50vw] w-[50vw] rounded-full bg-[#8A3A33]/[0.7] blur-[120px]"
         />
       </div>
 
