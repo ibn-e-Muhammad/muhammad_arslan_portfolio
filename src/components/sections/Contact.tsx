@@ -55,7 +55,7 @@ export default function Contact() {
       className="relative min-h-screen bg-oatmeal text-ink flex flex-col justify-between px-8 py-12 md:px-16 md:py-16 lg:px-28 lg:py-24 overflow-hidden"
     >
       {/* ── Ambient orbs — light theme ─────────────── */}
-      <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
             x: ["-10%", "20%", "-20%", "10%", "-10%"],
@@ -63,7 +63,7 @@ export default function Contact() {
             scale: [1, 1.2, 0.9, 1.1, 1],
           }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="glow-orb absolute top-1/4 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9]/[0.12] blur-[40px]"
+          className="glow-orb absolute top-1/4 left-1/2 h-[50vw] w-[50vw] rounded-full bg-[#0293b7c9]/[0.50] blur-[60px]"
         />
         <motion.div
           animate={{
@@ -72,7 +72,7 @@ export default function Contact() {
             scale: [1, 1.1, 0.8, 1.2, 1],
           }}
           transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="glow-orb absolute top-1/2 right-1/4 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33]/[0.08] blur-[60px]"
+          className="glow-orb absolute top-1/2 right-1/4 h-[55vw] w-[55vw] rounded-full bg-[#8A3A33]/[0.40] blur-[80px]"
         />
         <motion.div
           animate={{
@@ -81,14 +81,14 @@ export default function Contact() {
             scale: [1, 1.3, 0.9, 1.1, 1],
           }}
           transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-          className="glow-orb absolute top-1/4 right-1/4 h-[30vw] w-[30vw] rounded-full bg-oatmeal blur-[80px]"
+          className="glow-orb absolute top-1/4 right-1/4 h-[30vw] w-[30vw] rounded-full bg-[#FFFDD0]/[0.40] blur-[80px]"
         />
       </div>
 
       {/* ── Ambient glow ────────────────────────── */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/3 h-[40vw] w-[40vw] rounded-full bg-terra/[0.04] blur-[140px]" />
-        <div className="absolute bottom-1/4 right-1/4 h-[50vw] w-[50vw] rounded-full bg-[#8A3A33]/[0.03] blur-[120px]" />
+        <div className="absolute top-1/4 left-1/3 h-[40vw] w-[40vw] rounded-full bg-terra/[0.15] blur-[140px]" />
+        <div className="absolute bottom-1/4 right-1/4 h-[50vw] w-[50vw] rounded-full bg-[#8A3A33]/[0.10] blur-[120px]" />
       </div>
 
       {/* ── Top label — availability badge ──────── */}
@@ -125,8 +125,22 @@ export default function Contact() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="cta-btn group mt-2 flex w-fit items-center gap-3 rounded-full bg-ink px-6 py-3.5 md:px-8 md:py-4 text-canvas transition-shadow hover:shadow-xl hover:shadow-ink/20"
+            className="cta-btn group mt-2 flex w-fit items-center gap-3 rounded-full bg-ink px-5 py-3 md:px-7 md:py-3.5 text-canvas transition-shadow hover:shadow-xl hover:shadow-ink/20"
           >
+            {/* Google Meet Logo */}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="shrink-0"
+            >
+              <path d="M22 6L16 11V7C16 5.89543 15.1046 5 14 5H4C2.89543 5 2 5.89543 2 7V17C2 18.1046 2.89543 19 4 19H14C15.1046 19 16 18.1046 16 17V13L22 18V6Z" fill="#34A853"/>
+              <path d="M16 11V7C16 5.89543 15.1046 5 14 5H9.5V11H16Z" fill="#EA4335"/>
+              <path d="M16 17V13L16 11H9.5V19H14C15.1046 19 16 18.1046 16 17Z" fill="#FBBC04"/>
+              <path d="M2 7V17C2 18.1046 2.89543 19 4 19H9.5V5H4C2.89543 5 2 5.89543 2 7Z" fill="#4285F4"/>
+            </svg>
+
             <span className="cta-btn-text-wrapper w-[170px] text-left">
               <span className="cta-text cta-text-primary font-sans text-sm font-medium tracking-wide">
                 Book a free 5-min call
