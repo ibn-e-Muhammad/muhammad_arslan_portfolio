@@ -31,6 +31,13 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     const startLenis = () => {
       if (lenisRef.current) return;
 
+      // Disable Lenis on touch devices to let native momentum scrolling take over
+      // This completely eliminates scroll jitter on mobile Safari/Chrome.
+      const isTouchDevice =
+        "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+      if (isTouchDevice) return;
+
       lenisRef.current = new Lenis({
         lerp: 0.04,
         smoothWheel: true,

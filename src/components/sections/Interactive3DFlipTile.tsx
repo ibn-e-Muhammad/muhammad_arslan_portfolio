@@ -95,6 +95,10 @@ export default function Interactive3DFlipTile({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
+            style={{
+              willChange: "opacity, filter",
+              WebkitTransform: "translateZ(0)",
+            }}
             className="fixed inset-0 z-[60] bg-ink/20 backdrop-blur-sm"
             onClick={onToggleFlip}
           />
@@ -143,7 +147,11 @@ export default function Interactive3DFlipTile({
             layout: { duration: 0.9, ease: [0.34, 1.2, 0.64, 1] },
             boxShadow: { duration: 0.2 }
           }}
-          style={{ transformStyle: "preserve-3d" }}
+          style={{
+            transformStyle: "preserve-3d",
+            willChange: "transform, filter",
+            WebkitTransform: "translateZ(0)",
+          }}
           className={`relative rounded-2xl w-full h-full transition-colors duration-500 ${
             isFlipped 
               ? "max-w-5xl max-h-[95vh] pointer-events-auto bg-canvas" 
